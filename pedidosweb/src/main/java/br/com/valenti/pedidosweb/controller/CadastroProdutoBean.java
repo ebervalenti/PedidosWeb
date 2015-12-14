@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,8 +24,10 @@ public class CadastroProdutoBean implements Serializable{
     
     private Produto produto;
     
-    private List<Categoria> categoriasRaizes;    
+    private List<Categoria> categoriasRaizes;   
     
+    @Inject
+    private EntityManager manager;
     
     /************************************** GETS ********************************************/
 	public Produto getProduto() {
@@ -46,7 +49,7 @@ public class CadastroProdutoBean implements Serializable{
 
 	/************************************** METODOS ********************************************/
 	public void salvar(){    
-		System.out.println("OK");
+		
     }
 
 	public CadastroProdutoBean() {
@@ -56,16 +59,7 @@ public class CadastroProdutoBean implements Serializable{
 	public void inicializar() {
 		System.out.println("Inicializando ... ");
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("PedidosWebPU");
-        EntityManager manager = factory.createEntityManager();                 	   
-		
-		//S/tring qlString = "form Categoria";		
-		
-		//categoriasRaizes=new ArrayList<>();
-		categoriasRaizes =  manager.createQuery("form Categoria", Categoria.class).getResultList();
-		
-		manager.close();
-
+		categoriasRaizes =  manager.createQuery("from Categoria", Categoria.class).getResultList();
 	}
 	
 	

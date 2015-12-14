@@ -8,9 +8,19 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    </properties>    
 
     <dependencies>
+        
+    <!-- Implementação do Bean Validation -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-cdi</artifactId>
+			<version>5.0.1.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		
 		<!-- Núcleo do Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -27,13 +37,7 @@
 			<scope>compile</scope>
 		</dependency>
 		
-		<!-- Implementação do Bean Validation -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator-cdi</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>compile</scope>
-		</dependency>
+		
 				
 
 		<!-- Driver JDBC do MySQL -->
