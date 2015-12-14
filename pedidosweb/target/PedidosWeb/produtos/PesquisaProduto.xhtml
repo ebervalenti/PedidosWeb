@@ -1,0 +1,74 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"    
+     xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+    
+    <ui:define name="titulo">Pesquisa Produto</ui:define> 
+    
+    <ui:define name="corpo">
+        <h1>Pesquisa Produto</h1> 
+        
+        <h:form>
+        
+            <p:toolbar>       
+                
+                <p:toolbarGroup> 
+                    <p:button value="Pesquisar" outcome="/produtos/CadastroProduto"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" />
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right"> 
+                    <p:button value="Novo" outcome="/produtos/CadastroProduto"/>                
+                </p:toolbarGroup>           
+
+            </p:toolbar>
+            <!-- Painel Preto /-->
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
+                
+                <p:outputLabel value="SKU" for="sku"/>
+                <p:inputText id="sku" size="20"/>
+
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText id="nome" size="60"/>            
+            
+            </p:panelGrid>
+            <!-- Tabela /-->
+            <p:dataTable id="produtosTable" value="qq" style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
+                         rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                <!-- COLUNA SKU /-->
+                <p:column headerText="SKU" style="text-align: center; width: 100px">
+                    
+                </p:column>
+                 <!-- COLUNA Nome /-->
+                <p:column headerText="Nome" style="text-align: center; width: 100px">
+                    
+                </p:column>
+                <!-- COLUNA Categoria /-->
+                <p:column headerText="Categoria" style="text-align: center; width: 250px">
+                    
+                </p:column>
+                <!-- COLUNA Valor Unitário /-->
+                <p:column headerText="Valor Unitário" style="text-align: center; width: 120px">
+                    
+                </p:column>
+                <!-- COLUNA Valor Estoque /-->
+                <p:column headerText="Estoque" style="text-align: center; width: 98px">
+             
+                </p:column>
+                <!-- COLUNA Valor Estoque /-->
+                <p:column style="text-align: center; width: 100px;  ">
+                        <p:button icon="ui-icon-pencil" style="width: 30px" title="Editar"/>
+                        <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmaExclusao.show()"/>
+                </p:column> 
+            </p:dataTable>
+            
+            <p:confirmDialog header="Exclusão de produto" message="Realmente deseja excluir?" widgetVar="confirmaExclusao">
+                <p:button value="Não" onclick="confirmaExclusao.hide(); return false;"/> 
+                <p:commandButton value="sim" onclick="confirmaExclusao.hide();"/>
+            </p:confirmDialog>
+            
+        </h:form>
+    </ui:define>           
+</ui:composition>   
