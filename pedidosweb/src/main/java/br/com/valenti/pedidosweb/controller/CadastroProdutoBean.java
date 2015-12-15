@@ -13,6 +13,7 @@ import javax.persistence.Persistence;
 
 import br.com.valenti.pedidosweb.model.def.Categoria;
 import br.com.valenti.pedidosweb.model.def.Produto;
+import br.com.valenti.pedidosweb.model.repository.Categorias;
 
 
 
@@ -27,7 +28,7 @@ public class CadastroProdutoBean implements Serializable{
     private List<Categoria> categoriasRaizes;   
     
     @Inject
-    private EntityManager manager;
+    private Categorias categorias;
     
     /************************************** GETS ********************************************/
 	public Produto getProduto() {
@@ -56,10 +57,8 @@ public class CadastroProdutoBean implements Serializable{
 		produto = new Produto();
 	}
 	
-	public void inicializar() {
-		System.out.println("Inicializando ... ");
-		
-		categoriasRaizes =  manager.createQuery("from Categoria", Categoria.class).getResultList();
+	public void inicializar() {		
+		categoriasRaizes =  categorias.raizes();
 	}
 	
 	
