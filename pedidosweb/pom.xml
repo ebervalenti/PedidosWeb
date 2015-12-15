@@ -35,10 +35,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.2.3.Final</version>
 			<scope>compile</scope>
-		</dependency>
-		
-		
-				
+		</dependency>				
 
 		<!-- Driver JDBC do MySQL -->
 		<dependency>
@@ -49,12 +46,23 @@
 		</dependency>
     
         <!-- Weld (implementação do CDI) -->
+        <!--
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
             <version>1.1.10.Final</version>
             <scope>compile</scope>
         </dependency>
+        -->
+        
+        <dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
+			<version>2.3.2.Final</version>
+			<scope>compile</scope>
+		</dependency>
+        
+      
     
         <!-- PrimeFaces (biblioteca de componentes) -->
         <dependency>
@@ -71,6 +79,8 @@
             <version>2.1.21</version>
             <scope>compile</scope>
         </dependency>        
+		
+		
 		<!-- Log4J -->    	
 		<dependency>
 			<groupId>log4j</groupId>
