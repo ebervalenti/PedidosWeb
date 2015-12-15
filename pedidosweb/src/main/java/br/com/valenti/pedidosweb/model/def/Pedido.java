@@ -1,6 +1,6 @@
 package br.com.valenti.pedidosweb.model.def;
 
-import br.com.valenti.pedidosweb.model.entity.Cliente;
+
 import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 
@@ -87,8 +87,8 @@ public class Pedido implements Serializable {
     
     @NotNull
     @ManyToOne
-    @JoinColumn(name="cliente_id", nullable=false)
-    private Cliente cliente;
+    @JoinColumn(name="pessoa_id", nullable=false)
+    private Pessoa cliente;
     
     @NotNull
     @Embedded
@@ -180,11 +180,11 @@ public class Pedido implements Serializable {
         this.vendedor = vendedor;
     }
 
-    public Cliente getCliente() {
+    public Pessoa getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(Pessoa cliente) {
         this.cliente = cliente;
     }
 

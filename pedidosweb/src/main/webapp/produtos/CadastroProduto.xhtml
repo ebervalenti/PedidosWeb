@@ -5,10 +5,10 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui" >
     
-    <ui:define name="titulo">Novo Produto</ui:define> 
-    
+    <ui:define name="titulo">Novo Produto</ui:define>    
     <ui:define name="corpo">
     <f:metadata>
+    <f:viewParam name="para_resolver_varios_selects" />
     <f:event listener="#{cadastroProdutoBean.inicializar}" type="preRenderView"/>
     </f:metadata>   	
         <h:form>
@@ -36,20 +36,25 @@
                 <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroProdutoBean.produto.nome}"/>
 
                 <p:outputLabel value="Categoria" for="categoria"/>
-                <p:selectOneMenu id="categoria">
+                <p:selectOneMenu id="categoria" value="#{cadastroProdutoBean.categoriaPai}">
                     <f:selectItem itemLabel="Selecione uma categoria"/>
                     <f:selectItems value="#{cadastroProdutoBean.categoriasRaizes}" var="categoria" itemValue="#{categoria}"
                     	itemLabel="#{categoria.descricao}"/>
+                   	<p:ajax listener="#{cadastroProdutoBean.carregarSubCategorias}" update="subcategorias"/>
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Sub Categoria" for="subcategoria"/>
-                <p:selectOneMenu id="subcategoria">
+                <p:outputLabel value="Sub Categoria" for="subcategorias"/>
+                <p:selectOneMenu id="subcategorias" value="#{cadastroProdutoBean.produto.categoria}">
                     <f:selectItem itemLabel="Selecione uma subcategoria"/>
+                    <f:selectItems value="#{cadastroProdutoBean.subcategorias}" var="subcategorias"
+                    itemValue="#{subcategorias}" itemLabel="#{subcategorias.descricao}"/>
                 </p:selectOneMenu>
 
-                <p:outputLabel value="Valor unitário" for="valorunitario"/>
-                <p:inputText id="valorunitario" size="10" maxlength="10" styleClass="moeda" 
-                	value="#{cadastroProdutoBean.produto.valorUnitario}"/>                	  	
+                <p:outputLabel value="Valor unitário" for="valorUnitario"/>
+                <p:inputText id="valorUnitario" size="10" maxlength="10" styleClass="moeda" 
+                	value="#{cadastroProdutoBean.produto.valorUnitario}">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+               	</p:inputText>                	  	
 
                 <p:outputLabel value="Estoque" for="estoque"/>
                 <p:inputText id="estoque" size="10" maxlength="5" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"/>

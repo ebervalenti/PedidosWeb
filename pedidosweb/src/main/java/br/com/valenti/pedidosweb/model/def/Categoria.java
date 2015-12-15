@@ -5,10 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
@@ -16,6 +22,7 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "categoria")
 public class Categoria implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/	
    	
@@ -25,14 +32,15 @@ public class Categoria implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     
-	
+	@Column(nullable = false, length = 60)
 	private String descricao;
     
-	
+	@ManyToOne
+	@JoinColumn(name = "categoria_pai_id")
 	private Categoria categoriaPai;
     
-	
-	//private List<Categoria> subcategorias = new ArrayList();
+	@OneToMany(mappedBy = "categoriaPai", cascade = CascadeType.ALL)
+	private List<Categoria> subcategorias = new ArrayList();
 
 	/************************************** GETS E SETS ********************************************/
     
@@ -61,14 +69,13 @@ public class Categoria implements Serializable{
         this.categoriaPai = categoriaPai;
     }
 
-    /*public List<Categoria> getSubcategorias() {
+    public List<Categoria> getSubcategorias() {
         return subcategorias;
     }
 
     public void setSubcategorias(List<Categoria> subcategorias) {
         this.subcategorias = subcategorias;
-    }
-    */
+    }    
 
     /************************************** hashCode E equals ********************************************/
     @Override

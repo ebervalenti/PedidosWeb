@@ -21,12 +21,12 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.mapping.Array;
 
+import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
 import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
 
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Pessoa implements Serializable {
 	
 	/************************************** PROPRIEDADES ********************************************/
@@ -34,7 +34,7 @@ public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(length=100)
@@ -48,6 +48,9 @@ public abstract class Pessoa implements Serializable {
 	
 	@Enumerated(EnumType.STRING)	
 	private TipoPessoa tipo;
+	
+	@Enumerated(EnumType.STRING)	
+	private FisicaJuridica fj;
 	
 	@OneToMany(mappedBy = "pessoa", targetEntity = Endereco.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)	
 	private List<Endereco> endereco = new ArrayList<Endereco>();

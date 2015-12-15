@@ -9,6 +9,13 @@ public class FacesUtil {
         FacesContext.getCurrentInstance().addMessage(message, 
                 new FacesMessage(FacesMessage.SEVERITY_ERROR, message,message));
         
-    }
+    }    
     
+    public static boolean isPostBack() {
+    	return FacesContext.getCurrentInstance().isPostback();
+	}
+    
+    public static boolean isNotPostBack() {
+    	return !isPostBack();
+	}
 }

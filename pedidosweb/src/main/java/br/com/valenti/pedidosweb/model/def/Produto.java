@@ -10,6 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -43,7 +45,7 @@ public class Produto implements Serializable{
     private String sku;
     
 	@NotNull
-    @Column(name="valor_unitario", precision=10, scale=2)
+    @Column(name="valor_unitario", nullable = false, precision=10, scale=2)
     private BigDecimal valorUnitario;
     
     @NotNull @Min(0)
@@ -51,7 +53,8 @@ public class Produto implements Serializable{
     private Integer quantidadeEstoque;
     
     @NotNull
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
     
     /************************************** GETS E SETS ********************************************/
