@@ -1,4 +1,6 @@
 /Cadastro_Cliente.xhtml
+/CriaProduto.class
+/CriaTabelas.class
 /Erro.xhtml
 /Home.xhtml
 /Login.xhtml
@@ -8,4 +10,3 @@
 /pedidos/
 /produtos/
 /resources/
-/util/

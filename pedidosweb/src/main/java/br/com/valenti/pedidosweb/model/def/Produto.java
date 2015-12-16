@@ -80,7 +80,7 @@ public class Produto implements Serializable{
     }
 
     public void setSku(String sku) {
-        this.sku = sku;
+        this.sku = sku.toUpperCase();
     }
 
     public BigDecimal getValorUnitario() {

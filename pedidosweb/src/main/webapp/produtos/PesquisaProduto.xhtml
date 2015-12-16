@@ -8,15 +8,12 @@
     <ui:define name="titulo">Pesquisa Produto</ui:define> 
     
     <ui:define name="corpo">
-        <h1>Pesquisa Produto</h1> 
-        
-        <h:form>
-        
-            <p:toolbar>       
-                
-                <p:toolbarGroup> 
-                    <p:button value="Pesquisar" outcome="/produtos/CadastroProduto"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" />
+        <h1>Pesquisa Produto</h1>         
+        <h:form>        
+            <p:toolbar>               
+                <p:toolbarGroup>                    
+                    <p:commandButton value="Pesquisar" action="#{pesquisaProdutoBean.}" 
+                    	update="@form" />
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right"> 
@@ -24,22 +21,24 @@
                 </p:toolbarGroup>           
 
             </p:toolbar>
-            <!-- Painel Preto /-->
+            <!-- Painel da pesquisa-->
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
                 
                 <p:outputLabel value="SKU" for="sku"/>
-                <p:inputText id="sku" size="20"/>
+                <p:inputText id="sku" size="20" value="#{pesquisaProdutoBean.produtoFiltrado.sku}"/>
 
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60"/>            
+                <p:inputText id="nome" size="60" value="#{pesquisaProdutoBean.produtoFiltrado.nome}"/>            
             
             </p:panelGrid>
-            <!-- Tabela /-->
-            <p:dataTable id="produtosTable" value="qq" style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
-                         rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+            <!-- Tabela com resultado da pesquisa -->
+            <p:dataTable id="produtosTable" value="#{pesquisaProdutoBean.produtosFiltrados}" var="produto" 
+            	style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
+                rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                
                 <!-- COLUNA SKU /-->
                 <p:column headerText="SKU" style="text-align: center; width: 100px">
-                    
+                	<p:outputLabel value="#{produto.sku}"/>                    
                 </p:column>
                  <!-- COLUNA Nome /-->
                 <p:column headerText="Nome" style="text-align: center; width: 100px">
