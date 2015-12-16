@@ -1,4 +1,4 @@
-package util.jsf;
+package br.com.valenti.pedidosweb.util.jsf;
 
 import javax.faces.context.ExceptionHandler;
 import javax.faces.context.ExceptionHandlerFactory;

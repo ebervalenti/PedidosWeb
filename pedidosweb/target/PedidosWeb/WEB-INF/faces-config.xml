@@ -6,7 +6,7 @@
     
     <factory>
         <exception-handler-factory>
-            util.jsf.JsfExceptionHandlerFactory
+            br.com.valenti.pedidosweb.util.jsf.JsfExceptionHandlerFactory
         </exception-handler-factory>
     </factory>
 

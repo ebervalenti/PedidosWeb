@@ -1,4 +1,4 @@
-package util.cdi;
+package br.com.valenti.pedidosweb.util.cdi;
 
 
 

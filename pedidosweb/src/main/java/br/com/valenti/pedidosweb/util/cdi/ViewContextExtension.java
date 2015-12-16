@@ -1,4 +1,4 @@
-package util.cdi;
+package br.com.valenti.pedidosweb.util.cdi;
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.spi.AfterBeanDiscovery;
 import javax.enterprise.inject.spi.BeforeBeanDiscovery;

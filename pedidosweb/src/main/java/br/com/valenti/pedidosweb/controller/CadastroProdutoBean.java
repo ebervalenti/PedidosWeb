@@ -14,7 +14,8 @@ import javax.persistence.Persistence;
 import br.com.valenti.pedidosweb.model.def.Categoria;
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.repository.Categorias;
-import util.jsf.FacesUtil;
+import br.com.valenti.pedidosweb.services.CadastroProdutoService;
+import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
 
 
@@ -33,6 +34,10 @@ public class CadastroProdutoBean implements Serializable{
     
     @Inject
 	private Categorias categorias;//Repository
+    
+    @Inject
+    private CadastroProdutoService cadastroProdutoService;
+    
     
   /************************************** CONSTRUTOR ********************************************/   
     public CadastroProdutoBean() {
@@ -78,13 +83,12 @@ public class CadastroProdutoBean implements Serializable{
 
 	/************************************** METODOS ********************************************/
 	public void salvar(){
-		System.out.println("Categoria pai selecionada: "+categoriaPai.getDescricao());
-		System.out.println("Categoria pai selecionada: "+produto.getCategoria().getDescricao());	
+		this.produto = cadastroProdutoService.salvar(this.produto);
+		
+		FacesUtil.addInfoMessage("Produto salvo com sucesso!");
     }
 	
-	public void inicializar() {
-		System.out.println("Inicializando ... ");
-		
+	public void inicializar() {		
 		if (FacesUtil.isNotPostBack()) {
 			categoriasRaizes =  categorias.raizes();			
 		}

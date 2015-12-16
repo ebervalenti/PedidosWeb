@@ -1,4 +1,4 @@
-package util.jsf;
+package br.com.valenti.pedidosweb.util.jsf;
 
 import br.com.valenti.pedidosweb.services.NegocioException;
 
