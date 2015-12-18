@@ -4,7 +4,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 
 import br.com.valenti.pedidosweb.model.def.Categoria;
 import br.com.valenti.pedidosweb.model.repository.Categorias;
@@ -16,7 +15,7 @@ import br.com.valenti.pedidosweb.util.cdi.CDIServiceLocator;
 public class CategoriaConverter implements Converter {
 	/************************************** PROPRIEDADES ********************************************/
 	
-	@Inject
+	//@Inject
 	private Categorias categorias;
 	
 

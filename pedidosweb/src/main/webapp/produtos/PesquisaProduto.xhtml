@@ -13,7 +13,7 @@
         	<p:messages autoUpdate="true" closable="true" />           
             <p:toolbar style="margin-top: 20px">               
                 <p:toolbarGroup>                    
-                    <p:commandButton value="Pesquisar" action="#{pesquisaProdutoBean.}" 
+                    <p:commandButton value="Pesquisar" action="#{pesquisaProdutoBean.pesquisar}" 
                     	update="@form" />
                 </p:toolbarGroup>
 
@@ -26,10 +26,10 @@
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
                 
                 <p:outputLabel value="SKU" for="sku"/>
-                <p:inputText id="sku" size="20" value="#{pesquisaProdutoBean.produtoFiltrado.sku}"/>
+                <p:inputText id="sku" size="20" value="#{pesquisaProdutoBean.filtro.sku}"/>
 
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60" value="#{pesquisaProdutoBean.produtoFiltrado.nome}"/>            
+                <p:inputText id="nome" size="60" value="#{pesquisaProdutoBean.filtro.nome}"/>            
             
             </p:panelGrid>
             <!-- Tabela com resultado da pesquisa -->
@@ -41,25 +41,35 @@
                 <p:column headerText="SKU" style="text-align: center; width: 100px">
                 	<p:outputLabel value="#{produto.sku}"/>                    
                 </p:column>
+                 
                  <!-- COLUNA Nome /-->
                 <p:column headerText="Nome" style="text-align: center; width: 100px">
-                    
+                 	<p:outputLabel value="#{produto.nome}"/>     	   
                 </p:column>
+                
                 <!-- COLUNA Categoria /-->
                 <p:column headerText="Categoria" style="text-align: center; width: 250px">
-                    
+                	<p:outputLabel value="#{produto.categoria.categoriaPai.descricao}"/>      
                 </p:column>
+                
+                <!-- COLUNA Categoria /-->
+                <p:column headerText="SubCategoria" style="text-align: center; width: 250px">
+                	<p:outputLabel value="#{produto.categoria.descricao}"/>      
+                </p:column>
+                
                 <!-- COLUNA Valor Unitário /-->
                 <p:column headerText="Valor Unitário" style="text-align: center; width: 120px">
-                    
+                 	<p:outputLabel value="#{produto.valorUnitario}"/>   
                 </p:column>
                 <!-- COLUNA Valor Estoque /-->
                 <p:column headerText="Estoque" style="text-align: center; width: 98px">
-             
+             		<p:outputLabel value="#{produto.quantidadeEstoque}"/>  
                 </p:column>
-                <!-- COLUNA Valor Estoque /-->
-                <p:column style="text-align: center; width: 100px;  ">
-                        <p:button icon="ui-icon-pencil" style="width: 30px" title="Editar"/>
+                <!-- COLUNA de edição do produto caneta e lixo /-->
+                <p:column style="width: 100px; text-align: center">
+	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
+	    				<f:param name="produto" value="#{produto.id}" />
+	    			</p:button>
                         <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmaExclusao.show()"/>
                 </p:column> 
             </p:dataTable>

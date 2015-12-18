@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -28,12 +29,13 @@ import br.com.valenti.pedidosweb.validation.SKU;
  */
 
 @Entity
+@Table(name="produto")
 public class Produto implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue
     private Long id;
     
 	@NotBlank
@@ -130,7 +132,4 @@ public class Produto implements Serializable{
         }
         return true;
     }
-    
-    
-
 }

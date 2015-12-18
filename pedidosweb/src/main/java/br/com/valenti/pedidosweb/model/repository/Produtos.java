@@ -74,9 +74,14 @@ public class Produtos implements Serializable {
 			criteria.add(Restrictions.ilike("nome", pesquisa.getNome(),MatchMode.ANYWHERE));		
 		}
 		
-		return criteria.addOrder(Order.asc("nome")).list();
-		
+		return criteria.addOrder(Order.asc("nome")).list();		
 	}
+	
+	public Produto porId(Long id) {
+		return manager.find(Produto.class, id);
+	}
+
+	
 		
 		
 	
