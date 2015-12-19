@@ -42,6 +42,7 @@ public class Produtos implements Serializable {
 		return manager.merge(produto);	
 		}	
 
+	
 	public Produto porSku(String sku) {
 		String qlString = "from Produto where upper(sku) = :sku"; 
 		
