@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -21,6 +22,8 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
+import br.com.valenti.pedidosweb.services.NegocioException;
+import br.com.valenti.pedidosweb.util.jpa.Transacional;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
 /**  Criado por: Eber Lasso  **/
@@ -31,6 +34,8 @@ public class Produtos implements Serializable {
 	
 	@Inject
 	private EntityManager manager;
+	
+	
 	
 
 	/************************************** CONSTRUTOR ********************************************/
@@ -80,6 +85,20 @@ public class Produtos implements Serializable {
 	
 	public Produto porId(Long id) {
 		return manager.find(Produto.class, id);
+	}
+	
+	@Transacional
+	public void excluir(Produto produto){
+		try {
+			produto = porId(produto.getId());			
+			manager.remove(produto);
+			manager.flush();
+		} catch (PersistenceException e) {
+			System.out.println("Erro em: Produtos / public void excluir(Produto produto)" );
+			throw new NegocioException("Erro ao excuir produto. Erro: "+e.getMessage());
+		}
+		
+		
 	}
 
 	

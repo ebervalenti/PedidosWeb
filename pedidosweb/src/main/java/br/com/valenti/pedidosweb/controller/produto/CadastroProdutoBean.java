@@ -41,7 +41,7 @@ public class CadastroProdutoBean implements Serializable{
     
   /************************************** CONSTRUTOR ********************************************/   
     public CadastroProdutoBean() {
-		produto = new Produto();		
+		limpar();
 	}  
 	
     
@@ -89,7 +89,9 @@ public class CadastroProdutoBean implements Serializable{
 	public void salvar(){
 		this.produto = cadastroProdutoService.salvar(this.produto);
 		
-		FacesUtil.addInfoMessage("Produto salvo com sucesso!");
+		FacesUtil.addInfoMessage("Produto "+ this.produto.getSku()+" - "+this.produto.getNome()+" salvo com sucesso!");
+		
+		limpar();
     }
 	
 	public void inicializar() {		
@@ -107,6 +109,16 @@ public class CadastroProdutoBean implements Serializable{
 	public void carregarSubCategorias() {
 		subcategorias = categorias.carregarSubcategorias(categoriaPai);
 		
+	}
+	
+	public boolean isEditando(){
+		return this.produto.getId()!= null; //troca o label da tela de cadastro para edição ou novo produto		
+	}
+	
+	public void limpar(){
+		produto = new Produto();
+		categoriaPai = null;
+		subcategorias = new ArrayList<>();	
 	}
 	
 	

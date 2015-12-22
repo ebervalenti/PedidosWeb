@@ -1,9 +1,6 @@
 package br.com.valenti.pedidosweb.model.def;
 
 
-import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
-import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -25,9 +22,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
+import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 
 /**
  *
@@ -43,7 +44,7 @@ public class Pedido implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     
 	
 	@NotNull
@@ -60,23 +61,23 @@ public class Pedido implements Serializable {
     
     @NotBlank @NotNull
 	@Column(name = "valor_frete",nullable=false,precision=10, scale=2 )
-    private BigDecimal valorFrete;
+    private BigDecimal valorFrete = BigDecimal.ZERO;
     
     @NotNull
 	@Column(name = "valor_desconto",nullable=false,precision=10, scale=2 )
-    private BigDecimal valorDesconto;
+    private BigDecimal valorDesconto = BigDecimal.ZERO;
     
     @NotNull
 	@Column(name = "valor_total",nullable=false,precision=10, scale=2 )
-    private BigDecimal valorTotal;
+    private BigDecimal valorTotal = BigDecimal.ZERO;
     
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name="satus_pedido", nullable=false, length=50)
-    private StatusPedido status;
+    private StatusPedido status = StatusPedido.ORCAMENTO;
     
     @NotNull @NotBlank
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name="forma_pgto", nullable=false)
     private FormaPagamento formaPagamento;
     
@@ -100,7 +101,7 @@ public class Pedido implements Serializable {
     
     /************************************** GETS E SETS ********************************************/
     
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -204,6 +205,17 @@ public class Pedido implements Serializable {
     public void setItensPedidos(List<ItemPedido> itensPedidos) {
         this.itensPedidos = itensPedidos;
     }
+    
+    @Transient
+    public boolean isNovo(){    	
+		return getId() == null;    	
+    }
+    
+    @Transient
+    public boolean isExistente() {
+		return !isNovo();    			
+	}
+    
     /************************************** hashCode E equals ********************************************/
     
     @Override

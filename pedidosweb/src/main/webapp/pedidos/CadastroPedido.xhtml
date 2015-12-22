@@ -8,19 +8,21 @@
     <ui:define name="titulo">Novo Pedido</ui:define> 
     
     <ui:define name="corpo">
+    
+    <f:metadata>
+    	<f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView"/>
+    </f:metadata>
         <h:form>
             <h1>Novo Pedido</h1>
             
-            <p:messages autoUpdate="true" closable="true"/>
+            <p:messages autoUpdate="true" closable="true"/>            
             
-            <!-- CHAMADA PARA TRAZER OS BOTÕES DO CADASTRO DE PEDIDO/-->
             <ui:include src="/pedidos/BotoesPedido.xhtml"/>      
-            <!-- CHAMADA PARA TRAZER A CAPA DO PEDID/-->
+            
             <ui:include src="/pedidos/CapaPedido.xhtml"/> 
-            <!-- TABS/-->
+            
             <p:tabView style="margin-top: 20px">
-                <p:tab title="Itens">
-                    <ui:include src="/pedidos/ItensPedido.xhtml"/>                     
+                <p:tab title="Itens">                                    
                 </p:tab>
                 
                 <p:tab title="Dados de Entrega">
