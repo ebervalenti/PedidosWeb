@@ -27,7 +27,7 @@ import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
 
 
 @Entity
-public abstract class Pessoa implements Serializable {
+public class Pessoa implements Serializable {
 	
 	/************************************** PROPRIEDADES ********************************************/
 
@@ -46,10 +46,10 @@ public abstract class Pessoa implements Serializable {
 	@Column(length=50)
 	private String docRF;
 	
-	@Enumerated(EnumType.STRING)	
+	@Enumerated(EnumType.ORDINAL)	
 	private TipoPessoa tipo;
 	
-	@Enumerated(EnumType.STRING)	
+	@Enumerated(EnumType.ORDINAL)	
 	private FisicaJuridica fj;
 	
 	@OneToMany(mappedBy = "pessoa", targetEntity = Endereco.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)	
