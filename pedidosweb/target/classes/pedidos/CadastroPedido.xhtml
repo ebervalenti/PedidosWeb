@@ -4,14 +4,16 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui" >
+      
+     <f:metadata>
+    	<f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView"/>
+    </f:metadata>
     
     <ui:define name="titulo">Novo Pedido</ui:define> 
     
     <ui:define name="corpo">
     
-    <f:metadata>
-    	<f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView"/>
-    </f:metadata>
+    
         <h:form>
             <h1>Novo Pedido</h1>
             
@@ -32,7 +34,8 @@
                 <p:tab title="Observação">
                     <ui:include src="/pedidos/ObervacaoPedido.xhtml"/>                     
                 </p:tab>
-            </p:tabView>   
+            </p:tabView>
+               
         </h:form>   
     </ui:define>           
 </ui:composition>   

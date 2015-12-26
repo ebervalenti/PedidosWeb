@@ -14,7 +14,7 @@ public enum FormaPagamento {
 	
 	private String descricao;
 
-	FormaPagamento(String descricao){
+	private FormaPagamento(String descricao){
 		this.descricao = descricao;
 	}
 

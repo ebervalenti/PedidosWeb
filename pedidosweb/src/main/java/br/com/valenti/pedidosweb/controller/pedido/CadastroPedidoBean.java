@@ -11,10 +11,12 @@ import br.com.valenti.pedidosweb.model.def.EnderecoEntrega;
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.def.Pessoa;
 import br.com.valenti.pedidosweb.model.def.Usuario;
+import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
 import br.com.valenti.pedidosweb.model.repository.Pessoas;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
-import br.com.valenti.pedidosweb.services.NegocioException;
+import br.com.valenti.pedidosweb.services.CadastroPedidoServices;
+import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
 
 @Named
@@ -37,6 +39,8 @@ public class CadastroPedidoBean implements Serializable{
     
     private PessoaFilter cliente = new PessoaFilter();
 	
+    @Inject
+    private CadastroPedidoServices cadastroPedidoService;
 	
 	/************************************** CONSTRUTOR ********************************************/
 	
@@ -61,23 +65,33 @@ public class CadastroPedidoBean implements Serializable{
 		this.vendedores = vendedores;
 	}
 
-	/************************************** MÉTODOS ********************************************/
-	
+	/************************************** MÉTODOS ********************************************/	
 	public void salvar() {
-		throw new NegocioException("Pedido não pode ser salvo, pois ainda não foi implementado.");
+		this.pedido = this.cadastroPedidoService.salvar(this.pedido);		
+		
+		FacesUtil.addInfoMessage("Pedido salvo com sucesso!.");
+		
+		limpar();
 	}
 	
-	public void limpar(){
+	private void limpar(){
 		pedido = new Pedido();
 		pedido.setEnderecoEntrega(new EnderecoEntrega());			
 	}
 	
 	public void inicializar() {
-		this.vendedores = this.usuarios.carregaUsuario(); 		
+		if (FacesUtil.isNotPostBack()) {
+			this.vendedores = this.usuarios.vendedores();			
+		}
+		 		
 	}
 	
 	public List<Pessoa> completarCliente(String nome) {		
 		this.cliente.setNome(nome);
 		return this.clientes.pesquisar(cliente); 		
 	} 	
+	
+	public FormaPagamento[] getFormaPgto(){
+		return FormaPagamento.values();	
+	}
 }
