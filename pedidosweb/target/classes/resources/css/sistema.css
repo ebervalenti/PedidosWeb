@@ -62,6 +62,7 @@ footer{
 .rotulo{
     width: 150px;
     font-weight: bold;
+    outline: none;    
 }
 
 .ajax-status{

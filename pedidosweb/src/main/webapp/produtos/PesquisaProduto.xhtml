@@ -8,15 +8,13 @@
     <ui:define name="titulo">Pesquisa Produto</ui:define> 
     
     <ui:define name="corpo">
-        <h1>Pesquisa Produto</h1> 
-        
-        <h:form>
-        
-            <p:toolbar>       
-                
-                <p:toolbarGroup> 
-                    <p:button value="Pesquisar" outcome="/produtos/CadastroProduto"/>
-                    <p:commandButton value="Salvar" id="botaoSalvar" />
+     <h:form id="frmPesquisaProduto">   
+        <h1>Pesquisa Produto</h1>
+        	<p:messages autoUpdate="true" closable="true" />           
+            <p:toolbar style="margin-top: 20px">               
+                <p:toolbarGroup>                    
+                    <p:commandButton value="Pesquisar" action="#{pesquisaProdutoBean.pesquisar}" 
+                    	update="@form" />
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right"> 
@@ -24,50 +22,73 @@
                 </p:toolbarGroup>           
 
             </p:toolbar>
-            <!-- Painel Preto /-->
+            <!-- Painel da pesquisa-->
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
                 
                 <p:outputLabel value="SKU" for="sku"/>
-                <p:inputText id="sku" size="20"/>
+                <p:inputText id="sku" size="20" value="#{pesquisaProdutoBean.filtro.sku}"/>
 
                 <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60"/>            
+                <p:inputText id="nome" size="60" value="#{pesquisaProdutoBean.filtro.nome}"/>            
             
             </p:panelGrid>
-            <!-- Tabela /-->
-            <p:dataTable id="produtosTable" value="qq" style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
-                         rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+            <!-- Tabela com resultado da pesquisa -->
+            <p:dataTable id="produtosTable" value="#{pesquisaProdutoBean.produtosFiltrados}" var="produto" 
+            	style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
+                rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+                
                 <!-- COLUNA SKU /-->
                 <p:column headerText="SKU" style="text-align: center; width: 100px">
-                    
+                	<p:outputLabel value="#{produto.sku}"/>                    
                 </p:column>
+                 
                  <!-- COLUNA Nome /-->
                 <p:column headerText="Nome" style="text-align: center; width: 100px">
-                    
+                 	<p:outputLabel value="#{produto.nome}"/>     	   
                 </p:column>
+                
                 <!-- COLUNA Categoria /-->
                 <p:column headerText="Categoria" style="text-align: center; width: 250px">
-                    
+                	<p:outputLabel value="#{produto.categoria.categoriaPai.descricao}"/>      
                 </p:column>
+                
+                <!-- COLUNA Categoria /-->
+                <p:column headerText="SubCategoria" style="text-align: center; width: 250px">
+                	<p:outputLabel value="#{produto.categoria.descricao}"/>      
+                </p:column>
+                
                 <!-- COLUNA Valor Unitário /-->
                 <p:column headerText="Valor Unitário" style="text-align: center; width: 120px">
-                    
+                 	<p:outputLabel value="#{produto.valorUnitario}"/>   
                 </p:column>
                 <!-- COLUNA Valor Estoque /-->
                 <p:column headerText="Estoque" style="text-align: center; width: 98px">
-             
+             		<p:outputLabel value="#{produto.quantidadeEstoque}"/>  
                 </p:column>
-                <!-- COLUNA Valor Estoque /-->
-                <p:column style="text-align: center; width: 100px;  ">
-                        <p:button icon="ui-icon-pencil" style="width: 30px" title="Editar"/>
-                        <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmaExclusao.show()"/>
+                <!-- COLUNA de edição do produto caneta e lixo /-->
+                <p:column headerText="Editar / Exluir" style="width: 100px; text-align: center">
+	    			
+	    			<!-- botão de editar -->
+	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
+	    				<f:param name="produto" value="#{produto.id}" />
+	    			</p:button>
+	    			
+	    			<!-- botão de excluir -->
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmaExclusao.show()"
+                    	process="@this" update=":frmPesquisaProduto:confirmaExclisaoDialog">
+                    	<f:setPropertyActionListener value="#{produto}" target="#{pesquisaProdutoBean.produtoSelecionado}"/>
+                    </p:commandButton>
                 </p:column> 
-            </p:dataTable>
+            </p:dataTable>      
             
-            <p:confirmDialog header="Exclusão de produto" message="Realmente deseja excluir?" widgetVar="confirmaExclusao">
-                <p:button value="Não" onclick="confirmaExclusao.hide(); return false;"/> 
-                <p:commandButton value="sim" onclick="confirmaExclusao.hide();"/>
-            </p:confirmDialog>
+            <!-- mensagem de confirmação de exclusão -->
+            <p:confirmDialog header="Exclusão de produto" message="Realmente deseja excluir o produto 
+            	#{pesquisaProdutoBean.produtoSelecionado.sku} - #{pesquisaProdutoBean.produtoSelecionado.nome}?" 
+            		widgetVar="confirmaExclusao" id="confirmaExclisaoDialog">
+                <p:button value="Não" onclick="confirmaExclusao.hide(); return false;" /> 
+                <p:commandButton value="Sim" oncomplete="confirmaExclusao.hide();" action="#{pesquisaProdutoBean.excluir}"
+                	process="@this" update=":frmPesquisaProduto:produtosTable"/>
+            </p:confirmDialog>           
             
         </h:form>
     </ui:define>           

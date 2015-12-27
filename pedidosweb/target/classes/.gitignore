@@ -1,5 +1,7 @@
 /Cadastro_Cliente.xhtml
 /Erro.xhtml
+/CriaProduto.class
+/CriaTabelas.class
 /Home.xhtml
 /Login.xhtml
 /META-INF/
@@ -8,4 +10,3 @@
 /pedidos/
 /produtos/
 /resources/
-/util/
