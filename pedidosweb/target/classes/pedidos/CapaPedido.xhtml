@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui" >
     
-    <h:form id="formCapa">
+    
 	    <p:panelGrid columns="4" style="width: 100%; margin-top: 20px;" 
 	                  columnClasses="rotulo,campo,rotulo,campo">
 	        
@@ -28,15 +28,15 @@
 	        </p:selectOneMenu>
 	        
 	        
-	        	<p:outputLabel value="Cliente " style="margin-left: 5px"/>	                    
+	        	<p:outputLabel value="Cliente " style="margin-left: 5px" for="cliente"/>	                    
 	            <p:autoComplete id="cliente" size="40" 
 	            value="#{cadastroPedidoBean.pedido.cliente}" completeMethod="#{cadastroPedidoBean.completarCliente}" 
 	            var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}" forceSelection="true">	            
-	            <p:ajax event="itemSelect" update="formCapa:a"/>	            
+	            <p:ajax event="itemSelect" update="codCli"/>	            
 	            </p:autoComplete>      
 	       
 	        	<p:outputLabel value="Codigo "/>
-	        	<p:outputLabel id="a" value="#{cadastroPedidoBean.pedido.cliente.id}" style="margin-left: 5px"/>      	
+	        	<p:outputLabel id="codCli" value="#{cadastroPedidoBean.pedido.cliente.id}" style="margin-left: 5px"/>      	
 	        
 	            <p:outputLabel value="Forma de pagamento" for="formaPagamento"/> 
 	            <p:selectOneMenu id="formaPagamento" value="#{cadastroPedidoBean.pedido.formaPagamento}">
@@ -67,7 +67,6 @@
 	            <h:outputText value="#{cadastroPedidoBean.pedido.valorTotal}" style="font-weight: bold; font-size: 1.1em" id="totalPedido">
 	            	<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>   
 	           	</h:outputText>    
-	    </p:panelGrid>
-    </h:form>
+	    </p:panelGrid>    
 </ui:composition>
   

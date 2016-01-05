@@ -9,11 +9,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  *
@@ -21,29 +21,27 @@ import javax.persistence.OneToOne;
  */
 
 @Entity
+@Table(name = "usuario")
 public class Usuario implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/
 
 	private static final long serialVersionUID = 1L;	
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
     
-    @Column(length=100)
-    private String nome;
+	private Long id;   
     
-    @Column(length=60)
-    private String email;
+    private String nome;   
     
-    @Column(length=8)
+    private String email;    
+    
     private String senha;
     
     @ManyToMany(cascade = CascadeType.ALL)	
     private List<Grupo> grupos = new ArrayList();
     
     /************************************** GETS E SETS ********************************************/
-
+	@Id
+	@GeneratedValue
     public Long getId() {
         return id;
     }
@@ -51,7 +49,8 @@ public class Usuario implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-
+	
+    @Column(length=100)
     public String getNome() {
         return nome;
     }
@@ -60,6 +59,7 @@ public class Usuario implements Serializable{
         this.nome = nome;
     }
 
+    @Column(nullable = false, unique = true, length = 255)
     public String getEmail() {
         return email;
     }
@@ -68,6 +68,7 @@ public class Usuario implements Serializable{
         this.email = email;
     }
 
+    @Column(nullable = false, length = 20)
     public String getSenha() {
         return senha;
     }
@@ -75,7 +76,10 @@ public class Usuario implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name="usuario_id"),
+			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     public List<Grupo> getGrupos() {
         return grupos;
     }

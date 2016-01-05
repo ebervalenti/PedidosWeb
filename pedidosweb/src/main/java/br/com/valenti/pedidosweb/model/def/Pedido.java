@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -33,80 +34,39 @@ import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
  */
 
 @Entity
+@Table(name = "pedido")
 public class Pedido implements Serializable {
 	/************************************** PROPRIEDADES ********************************************/
 
 	private static final long serialVersionUID = 1L;
-
-	
-	@Id
-	@GeneratedValue	
-    private Long id;
-    
-	
-	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column
+	private Long id;
 	private Date dataCriacao;
-    
-	
-	@Column(length=100)
 	private String observacao;
-    
-    @NotNull
-	@Temporal(TemporalType.DATE)
     private Date dataEntrega;
-    
-    @NotNull
-	@Column(name = "valor_frete",nullable=false,precision=10, scale=2 )
     private BigDecimal valorFrete = BigDecimal.ZERO;
-    
-    @NotNull
-	@Column(name = "valor_desconto",nullable=false,precision=10, scale=2 )
     private BigDecimal valorDesconto = BigDecimal.ZERO;
-    
-    @NotNull
-	@Column(name = "valor_total",nullable=false,precision=10, scale=2 )
-    private BigDecimal valorTotal = BigDecimal.ZERO;
-    
-    @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name="satus_pedido", nullable=false, length=50)
-    private StatusPedido status = StatusPedido.ORCAMENTO;
-    
-    @NotNull
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name="forma_pgto", nullable=false)
-    private FormaPagamento formaPagamento;
-    
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name="id_vendedor", nullable=false)
-    private Usuario vendedor;
-    
-    @NotNull 
-    @ManyToOne
-    @JoinColumn(name="pessoa_id", nullable=false)
-    private Pessoa cliente;
-    
-    @NotNull
-    @Embedded
-    private EnderecoEntrega enderecoEntrega;
-    
-    @NotNull
-    @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
+    private BigDecimal valorTotal = BigDecimal.ZERO;   
+    private StatusPedido status = StatusPedido.ORCAMENTO;   
+    private FormaPagamento formaPagamento;   
+    private Usuario vendedor;   
+    private Pessoa cliente;  
+    private EnderecoEntrega enderecoEntrega;   
     private List<ItemPedido> itensPedidos = new ArrayList();
     
     /************************************** GETS E SETS ********************************************/
-    
+    @Id
+	@GeneratedValue	
     public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    @NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column
     public Date getDataCriacao() {
         return dataCriacao;
     }
@@ -115,6 +75,7 @@ public class Pedido implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
+    @Column(length=100)
     public String getObservacao() {
         return observacao;
     }
@@ -123,6 +84,8 @@ public class Pedido implements Serializable {
         this.observacao = observacao;
     }
 
+    @NotNull
+	@Temporal(TemporalType.DATE)
     public Date getDataEntrega() {
         return dataEntrega;
     }
@@ -131,6 +94,8 @@ public class Pedido implements Serializable {
         this.dataEntrega = dataEntrega;
     }
 
+    @NotNull
+	@Column(name = "valor_frete",nullable=false,precision=10, scale=2 )
     public BigDecimal getValorFrete() {
         return valorFrete;
     }
@@ -139,6 +104,8 @@ public class Pedido implements Serializable {
         this.valorFrete = valorFrete;
     }
 
+    @NotNull
+	@Column(name = "valor_desconto",nullable=false,precision=10, scale=2 )
     public BigDecimal getValorDesconto() {
         return valorDesconto;
     }
@@ -147,6 +114,8 @@ public class Pedido implements Serializable {
         this.valorDesconto = valorDesconto;
     }
 
+    @NotNull
+	@Column(name = "valor_total",nullable=false,precision=10, scale=2 )
     public BigDecimal getValorTotal() {
         return valorTotal;
     }
@@ -155,6 +124,9 @@ public class Pedido implements Serializable {
         this.valorTotal = valorTotal;
     }
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name="satus_pedido", nullable=false, length=50)
     public StatusPedido getStatus() {
         return status;
     }
@@ -163,6 +135,9 @@ public class Pedido implements Serializable {
         this.status = status;
     }
 
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name="forma_pgto", nullable=false)
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
@@ -171,6 +146,9 @@ public class Pedido implements Serializable {
         this.formaPagamento = formaPagamento;
     }
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name="vendedor_id", nullable=false)
     public Usuario getVendedor() {
         return vendedor;
     }
@@ -179,6 +157,9 @@ public class Pedido implements Serializable {
         this.vendedor = vendedor;
     }
 
+    @NotNull 
+    @ManyToOne
+    @JoinColumn(name="pessoa_id", nullable=false)
     public Pessoa getCliente() {
         return cliente;
     }
@@ -187,6 +168,7 @@ public class Pedido implements Serializable {
         this.cliente = cliente;
     }
 
+    @Embedded
     public EnderecoEntrega getEnderecoEntrega() {
         return enderecoEntrega;
     }
@@ -196,6 +178,8 @@ public class Pedido implements Serializable {
     }
     
 
+    @NotNull
+    @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true)
     public List<ItemPedido> getItensPedidos() {
         return itensPedidos;
     }
@@ -213,30 +197,34 @@ public class Pedido implements Serializable {
     public boolean isExistente() {
 		return !isNovo();    			
 	}
+	
     
     /************************************** hashCode E equals ********************************************/
-    
     @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
-        return hash;
-    }   
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Pedido other = (Pedido) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pedido other = (Pedido) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+    
     
     
 }

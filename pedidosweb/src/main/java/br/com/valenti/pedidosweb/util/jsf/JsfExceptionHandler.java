@@ -65,10 +65,7 @@ public class JsfExceptionHandler extends ExceptionHandlerWrapper {
             }
             System.out.println("Erro de sistema: "+exception.getMessage());		
         }
-
         getWrapped().handle();
-        System.out.println("fim");
-
     }
 	
 	private NegocioException getNegocioException(Throwable exception) {

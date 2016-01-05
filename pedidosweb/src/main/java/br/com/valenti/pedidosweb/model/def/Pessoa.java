@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.mapping.Array;
 
@@ -27,36 +28,25 @@ import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
 
 
 @Entity
+@Table(name = "pessoa")
 public class Pessoa implements Serializable {
 	
 	/************************************** PROPRIEDADES ********************************************/
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Long id;
-	
-	@Column(length=100)
 	private String nome;
-	
-	@Column(length=60)
 	private String email;
-	
-	@Column(length=50)
 	private String docRF;
-	
-	@Enumerated(EnumType.ORDINAL)	
 	private TipoPessoa tipo;
-	
-	@Enumerated(EnumType.ORDINAL)	
 	private FisicaJuridica fj;
-	
-	@OneToMany(mappedBy = "pessoa", targetEntity = Endereco.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)	
-	private List<Endereco> endereco = new ArrayList<Endereco>();
+	private List<Endereco> endereco = new ArrayList<>();
 
 	/************************************** GETS E SETS ********************************************/
-	
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +55,7 @@ public class Pessoa implements Serializable {
 		this.id = id;
 	}
 
+	@Column(nullable = false, length = 100)
 	public String getNome() {
 		return nome;
 	}
@@ -73,6 +64,7 @@ public class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
+	@Column(nullable = false, length = 255)
 	public String getEmail() {
 		return email;
 	}
@@ -81,7 +73,7 @@ public class Pessoa implements Serializable {
 		this.email = email;
 	}
 
-	
+	@Column(name = "doc_receita_federal", nullable = false, length = 14)
 	public String getDocRF() {
 		return docRF;
 	}
@@ -90,23 +82,29 @@ public class Pessoa implements Serializable {
 		this.docRF = docRF;
 	}		
 	
-	public TipoPessoa getTipo() {
-		return tipo;
+	@Enumerated(EnumType.STRING)
+	@Column(name="fisica_juridica", nullable = false, length = 10)
+	public FisicaJuridica getFj() {
+		return fj;
 	}
 
-	public void setTipo(TipoPessoa tipo) {
-		this.tipo = tipo;
+	public void setFj(FisicaJuridica fj) {
+		this.fj = fj;
 	}
-
 	
-	public List<Endereco> getEnderecos() {
+	
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+	public List<Endereco> getEndereco() {
 		return endereco;
-	}
+	}	
+	
 
 	public void setEndereco(List<Endereco> endereco) {
 		this.endereco = endereco;
 	}
 	
+	
+
 	/************************************** hashCode E equals ********************************************/
 
 	@Override

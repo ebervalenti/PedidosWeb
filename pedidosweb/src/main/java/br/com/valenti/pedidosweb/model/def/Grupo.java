@@ -8,29 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author Eber Lasso
  */
 @Entity
+@Table(name = "grupo")
 public class Grupo implements Serializable {
 	/************************************** PROPRIEDADES ********************************************/
 
 	private static final long serialVersionUID = 1L;	
     
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Long id;
     
-	@Column(length=60)
+	
 	private String nome;
     
-	@Column(length=100)
+	
 	private String descricao;
 
 	/************************************** GETS E SETS ********************************************/
-   
+	@Id
+	@GeneratedValue
 	public Long getId() {
         return id;
     }
@@ -39,6 +41,7 @@ public class Grupo implements Serializable {
         this.id = id;
     }
 
+    @Column(nullable=false, length=40)
     public String getNome() {
         return nome;
     }
@@ -47,6 +50,7 @@ public class Grupo implements Serializable {
         this.nome = nome;
     }
 
+    @Column(nullable=false, length=80)
     public String getDescricao() {
         return descricao;
     }

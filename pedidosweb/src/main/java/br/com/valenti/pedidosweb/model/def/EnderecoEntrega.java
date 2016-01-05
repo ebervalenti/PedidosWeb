@@ -17,62 +17,72 @@ import org.hibernate.validator.constraints.NotBlank;
 @Embeddable
 public class EnderecoEntrega implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
 	
-	@NotBlank @Size(max=150)
-	@Column(length=150, nullable=false)
-	private String logradouro;
-	
-	@NotBlank @Size(max=20)
-	@Column(length=20, nullable=false)
+	private String logradouro;		
 	private String numero;
-	
-	@NotBlank @Size(max=150)
 	private String complemento;
-	
-	@NotBlank @Size(max=60)
 	private String cidade;
-	
-	
 	private String uf;
-	
-	@NotBlank @Size(max=9)
 	private String cep;
-	
 	/************************************** GETS E SETS ********************************************/
+	
+	@NotBlank @Size(max = 150)
+	@Column(name = "entrega_logradouro", nullable = false, length = 150)
 	public String getLogradouro() {
 		return logradouro;
 	}
+	
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
+	
+	@NotBlank @Size(max = 20)
+	@Column(name = "entrega_numero", nullable = false, length = 20)
 	public String getNumero() {
 		return numero;
 	}
+	
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
+	
+	@Size(max = 150)
+	@Column(name = "entrega_complemento", length = 150)
 	public String getComplemento() {
 		return complemento;
 	}
+	
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
 	}
+	
+	@NotBlank @Size(max = 60)
+	@Column(name = "entrega_cidade", nullable = false, length = 60)
 	public String getCidade() {
 		return cidade;
 	}
+	
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+	
+	@NotBlank @Size(max = 60)
+	@Column(name = "entrega_uf", nullable = false, length = 60)
 	public String getUf() {
 		return uf;
 	}
+	
 	public void setUf(String uf) {
 		this.uf = uf;
 	}
+	
+	@NotBlank @Size(max = 9)
+	@Column(name = "entrega_cep", nullable = false, length = 9)
 	public String getCep() {
 		return cep;
 	}
+	
 	public void setCep(String cep) {
 		this.cep = cep;
 	}

@@ -44,15 +44,12 @@ public class ProdutoConverter implements Converter {
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
 			Produto produto = (Produto) value;
-			if (produto.getId() == null) {
-				System.out.println("Converter 1");
+			if (produto.getId() == null) {				
 				return  null;
 			}
-			else{
-				System.out.println("Converter 2");
+			else{				
 				return produto.getId().toString();		
 			}
-			//return produto.getId() == null ? null : produto.getId().toString();
 		}
 		return "";
 	}
@@ -62,5 +59,6 @@ public class ProdutoConverter implements Converter {
 	/************************************** MÉTODOS ********************************************/
 
 	/************************************** hashCode E equals ********************************************/
-
 }
+
+

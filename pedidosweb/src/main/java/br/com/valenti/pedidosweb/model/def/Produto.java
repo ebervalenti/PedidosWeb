@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -34,24 +35,19 @@ public class Produto implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/	
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue
+	
     private Long id;
     
-	@NotBlank
-    @Column
+	
     private String nome;
     
-	@NotBlank @SKU
-    @Column
+	
     private String sku;
     
-	@NotNull
-    @Column(name="valor_unitario", nullable = false, precision=10, scale=2)
+	
     private BigDecimal valorUnitario;
     
-    @NotNull @Min(0)
-    @Column(name="qtd_estoque", nullable=false,length=50)
+    
     private Integer quantidadeEstoque;
     
     @NotNull
@@ -60,7 +56,8 @@ public class Produto implements Serializable{
     private Categoria categoria;
     
     /************************************** GETS E SETS ********************************************/
-
+    @Id
+	@GeneratedValue
     public Long getId() {
         return id;
     }
@@ -68,7 +65,10 @@ public class Produto implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-
+    
+    @NotBlank
+	@Size(max = 80)
+	@Column(nullable = false, length = 80)
     public String getNome() {
         return nome;
     }
@@ -76,7 +76,9 @@ public class Produto implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
+    @NotBlank @SKU
+	@Column(nullable = false, length = 20, unique = true)
     public String getSku() {
         return sku;
     }
@@ -84,7 +86,9 @@ public class Produto implements Serializable{
     public void setSku(String sku) {
         this.sku = sku.toUpperCase();
     }
-
+    
+    @NotNull
+    @Column(name="valor_unitario", nullable = false, precision=10, scale=2)
     public BigDecimal getValorUnitario() {
         return valorUnitario;
     }
@@ -92,15 +96,20 @@ public class Produto implements Serializable{
     public void setValorUnitario(BigDecimal valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
-
+    
+    @NotNull @Min(0)
+    @Column(name="qtd_estoque", nullable=false,length=5)
     public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
-    }
-
+    }   
+    
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
+    @NotNull
+	@ManyToOne
+	@JoinColumn(name = "categoria_id", nullable = false)
     public Categoria getCategoria() {
         return categoria;
     }

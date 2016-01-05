@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
@@ -18,32 +19,31 @@ import javax.persistence.ManyToOne;
  */
 
 @Entity
+@Table(name = "item_pedido")
 public class ItemPedido implements Serializable{
 	
 	/************************************** PROPRIEDADES ********************************************/	
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Long id;
 	
-	@Column(nullable = false)
+	
     private Integer quantidade;
 	
-	@Column(name="valor_unitario", nullable=false, precision=10,scale=2)
+	
     private BigDecimal valorUnitario;
     
-	@ManyToOne
-	@JoinColumn(name="produto_id",nullable=false)
+	
 	private Produto produto;
     
-	@ManyToOne
-	@JoinColumn(name = "pedido_id", nullable=false)
+	
 	private Pedido pedido;
     
     /************************************** GETS E SETS ********************************************/
-
+	@Id
+		@GeneratedValue
     public Long getId() {
         return id;
     }
@@ -51,7 +51,8 @@ public class ItemPedido implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-
+	
+    @Column(nullable = false, length = 3)
     public Integer getQuantidade() {
         return quantidade;
     }
@@ -60,6 +61,7 @@ public class ItemPedido implements Serializable{
         this.quantidade = quantidade;
     }
 
+    @Column(name="valor_unitario", nullable=false, precision=10,scale=2)
     public BigDecimal getValorUnitario() {
         return valorUnitario;
     }
@@ -68,6 +70,8 @@ public class ItemPedido implements Serializable{
         this.valorUnitario = valorUnitario;
     }
 
+    @ManyToOne
+	@JoinColumn(name="produto_id",nullable=false)
     public Produto getProduto() {
         return produto;
     }
@@ -76,6 +80,8 @@ public class ItemPedido implements Serializable{
         this.produto = produto;
     }
 
+    @ManyToOne
+	@JoinColumn(name = "pedido_id", nullable=false)
     public Pedido getPedido() {
         return pedido;
     }

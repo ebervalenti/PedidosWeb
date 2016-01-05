@@ -13,42 +13,41 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Table(name = "endereco")
 public abstract class Endereco implements Serializable {
 	/************************************** PROPRIEDADES ********************************************/
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	
-	@Column()
+	private Long id;	
+	
 	private String logradouro;
 	
-	@Column(length=20)
+	
 	private String numero;
 	
-	@Column(length=50)
+	
 	private String complemento;
 	
-	@Column(length=100)
+	
 	private String cidade;
 	
-	@Column(length=2)
+	
 	private String uf;
 	
-	@Column(length=8)
+	
 	private String cep;	
 	
-	@ManyToOne
-	@JoinColumn(name="pessoa_id")
+	
 	private Pessoa pessoa;
 	
 	/************************************** GETS E SETS ********************************************/
-	
+	@Id
+	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +56,7 @@ public abstract class Endereco implements Serializable {
 		this.id = id;
 	}
 
+	@Column(nullable = false, length = 150)
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -65,6 +65,7 @@ public abstract class Endereco implements Serializable {
 		this.logradouro = logradouro;
 	}
 
+	@Column(nullable = false, length = 20)
 	public String getNumero() {
 		return numero;
 	}
@@ -73,6 +74,7 @@ public abstract class Endereco implements Serializable {
 		this.numero = numero;
 	}
 
+	@Column(length = 150)
 	public String getComplemento() {
 		return complemento;
 	}
@@ -81,6 +83,7 @@ public abstract class Endereco implements Serializable {
 		this.complemento = complemento;
 	}
 
+	@Column(nullable = false, length = 60)
 	public String getCidade() {
 		return cidade;
 	}
@@ -89,6 +92,7 @@ public abstract class Endereco implements Serializable {
 		this.cidade = cidade;
 	}
 
+	@Column(nullable = false, length = 60)
 	public String getUf() {
 		return uf;
 	}
@@ -97,6 +101,7 @@ public abstract class Endereco implements Serializable {
 		this.uf = uf;
 	}
 
+	@Column(nullable = false, length = 9)
 	public String getCep() {
 		return cep;
 	}
@@ -105,6 +110,8 @@ public abstract class Endereco implements Serializable {
 		this.cep = cep;
 	}	
 	
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id", nullable = false)
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
