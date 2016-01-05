@@ -20,7 +20,7 @@
   	</ui:define> 
     
     <ui:define name="corpo">   
-        <h:form>
+        <h:form id="frmCadastroPedido">
             <h1>
             	<h:outputText rendered="#{cadastroPedidoBean.editando == true}" 
             	value="Editando Pedido No.: #{cadastroPedidoBean.pedido.id} - 
@@ -37,7 +37,8 @@
             <ui:include src="/pedidos/CapaPedido.xhtml"/> 
             
             <p:tabView style="margin-top: 20px">
-                <p:tab title="Itens">                                    
+                <p:tab title="Itens"> 
+                <ui:include src="/pedidos/ItensPedido.xhtml"/>                                    
                 </p:tab>
                 
                 <p:tab title="Dados de Entrega">

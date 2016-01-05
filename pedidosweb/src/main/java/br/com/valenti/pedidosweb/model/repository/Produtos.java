@@ -101,6 +101,11 @@ public class Produtos implements Serializable {
 		
 	}
 
+
+	public List<Produto> porNome(String nome) {		
+		return null;
+	}
+
 	
 		
 		

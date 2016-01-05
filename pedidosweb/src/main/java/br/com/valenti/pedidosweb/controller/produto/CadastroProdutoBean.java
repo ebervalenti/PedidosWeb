@@ -100,10 +100,8 @@ public class CadastroProdutoBean implements Serializable{
 		}
 		
 		if (categoriaPai != null) {
-			carregarSubCategorias();
-			
-		}
-		
+			carregarSubCategorias();			
+		}	
 	}
 	
 	public void carregarSubCategorias() {

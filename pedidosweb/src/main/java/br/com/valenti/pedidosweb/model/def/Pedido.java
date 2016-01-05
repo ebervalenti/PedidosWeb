@@ -51,7 +51,7 @@ public class Pedido implements Serializable {
     private Usuario vendedor;   
     private Pessoa cliente;  
     private EnderecoEntrega enderecoEntrega;   
-    private List<ItemPedido> itensPedidos = new ArrayList();
+    private List<ItemPedido> itensPedidos = new ArrayList<ItemPedido>();
     
     /************************************** GETS E SETS ********************************************/
     @Id
@@ -205,7 +205,7 @@ public class Pedido implements Serializable {
 		total = total.add(this.getValorFrete()).subtract(this.getValorDesconto()); 
 		
 		for (ItemPedido item : this.getItensPedidos()) {
-			if (item.getProduto() != null && item.getProduto() != null) {
+			if (item.getProduto() != null && item.getProduto().getId() != null) {
 				total = total.add(item.getValorTotal());				
 			}			
 		}		
@@ -217,9 +217,25 @@ public class Pedido implements Serializable {
 		return this.getValorTotal().subtract(this.getValorFrete().add(this.getValorDesconto()));    	
     }
     
-	
+    //primeiro produto da lista de todos os itens
+    public void adicionarItemVazio() {
+    	if (this.isOrcamento()) {	
+		Produto produto = new Produto();
+				
+		ItemPedido item = new ItemPedido();		
+		item.setProduto(produto);
+		item.setPedido(this);
+		
+		this.getItensPedidos().add(0,item);	
+    	}
+	}  
     
-    /************************************** hashCode E equals ********************************************/
+    @Transient
+    public boolean isOrcamento() {		
+		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+	}
+
+	/************************************** hashCode E equals ********************************************/
     @Override
 	public int hashCode() {
 		final int prime = 31;
@@ -243,6 +259,5 @@ public class Pedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}  
-    
+	}   
 }
