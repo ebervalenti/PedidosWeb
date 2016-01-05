@@ -179,7 +179,7 @@ public class Pedido implements Serializable {
     
 
     @NotNull
-    @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true)
+    @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
     public List<ItemPedido> getItensPedidos() {
         return itensPedidos;
     }
@@ -197,6 +197,26 @@ public class Pedido implements Serializable {
     public boolean isExistente() {
 		return !isNovo();    			
 	}
+    
+    @Transient
+    public void recalcularValorTotal() {
+		BigDecimal total = BigDecimal.ZERO;
+		
+		total = total.add(this.getValorFrete()).subtract(this.getValorDesconto()); 
+		
+		for (ItemPedido item : this.getItensPedidos()) {
+			if (item.getProduto() != null && item.getProduto() != null) {
+				total = total.add(item.getValorTotal());				
+			}			
+		}		
+		this.setValorTotal(total); 		
+	}
+    
+    @Transient
+    public BigDecimal getValorSubTotal(){
+		return this.getValorTotal().subtract(this.getValorFrete().add(this.getValorDesconto()));    	
+    }
+    
 	
     
     /************************************** hashCode E equals ********************************************/
@@ -223,8 +243,6 @@ public class Pedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-    
-    
+	}  
     
 }

@@ -6,15 +6,26 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:o="http://omnifaces.org/ui">
     
-     <ui:define name="titulo">#{cadastroProdutoBean.editando ? 'Edição de produto' : 'Novo produto'}</ui:define>
+     <ui:define name="titulo">
+		<h:outputText rendered="#{cadastroProdutoBean.editando == true}" 
+        value="Edit. Prod.: #{cadastroProdutoBean.produto.sku}"/> 
+        
+        <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
+        value="Noco Produto"/> 
+	</ui:define>
     <ui:define name="corpo">
     <f:metadata>
     		<o:viewParam name="produto" value="#{cadastroProdutoBean.produto}" />
     		<f:event listener="#{cadastroProdutoBean.inicializar}" type="preRenderView" />
     	</f:metadata>    
         <h:form>
-            <h1>#{cadastroProdutoBean.editando ? 'Editando: ' : 'Novo Produto'} #{cadastroProdutoBean.produto.sku} - 
-            #{cadastroProdutoBean.produto.nome}</h1>           
+	        <h1>
+	            <h:outputText rendered="#{cadastroProdutoBean.editando == true}" 
+	        	value="Editando Produto: #{cadastroProdutoBean.produto.sku} - #{cadastroProdutoBean.produto.nome} "/> 
+	        
+		        <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
+		        value="Noco Produto"/> 
+	        </h1>           
             
             <p:messages autoUpdate="true" closable="true"></p:messages>
 

@@ -83,7 +83,7 @@ public class CadastroPedidoBean implements Serializable{
 		if (FacesUtil.isNotPostBack()) {
 			this.vendedores = this.usuarios.vendedores();			
 		}
-		 		
+		this.recalcularPedido();		 		
 	}
 	
 	public List<Pessoa> completarCliente(String nome) {		
@@ -94,4 +94,18 @@ public class CadastroPedidoBean implements Serializable{
 	public FormaPagamento[] getFormaPgto(){
 		return FormaPagamento.values();	
 	}
+	
+	//Chama o método de recalcular na classe pedido para atualizar o total do pedido tela.
+	public void recalcularPedido(){
+		if (this.pedido != null) {
+			this.pedido.recalcularValorTotal();			
+		}		
+	}
+	
+	//troca o label da tela de cadastro para edição ou novo pedido	
+	public boolean isEditando(){
+		return this.pedido.getId()!= null; 	
+	}
+	
+	
 }

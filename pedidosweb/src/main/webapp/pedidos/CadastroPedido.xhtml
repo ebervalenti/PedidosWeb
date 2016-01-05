@@ -3,19 +3,32 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:o="http://omnifaces.org/ui">
       
      <f:metadata>
+     	<o:viewParam name="pedido" value="#{cadastroPedidoBean.pedido}"/>    	
     	<f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView"/>
     </f:metadata>
     
-    <ui:define name="titulo">Novo Pedido</ui:define> 
+    <ui:define name="titulo">
+	    <h:outputText rendered="#{cadastroPedidoBean.editando == true}"
+	    value="Editando Pedido: #{cadastroPedidoBean.pedido.id}"/>
+	    
+	    <h:outputText rendered="#{cadastroPedidoBean.editando == false}" 
+        value="Novo Pedido"/> 
+  	</ui:define> 
     
-    <ui:define name="corpo">
-    
-    
+    <ui:define name="corpo">   
         <h:form>
-            <h1>Novo Pedido</h1>
+            <h1>
+            	<h:outputText rendered="#{cadastroPedidoBean.editando == true}" 
+            	value="Editando Pedido No.: #{cadastroPedidoBean.pedido.id} - 
+            	#{cadastroPedidoBean.pedido.cliente.nome}"/>
+            	
+            	<h:outputText rendered="#{cadastroPedidoBean.editando == false}" 
+            	value="Novo Pedido"/>            	
+            </h1>
             
             <p:messages autoUpdate="true" closable="true"/>            
             
