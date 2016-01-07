@@ -11,7 +11,7 @@
         value="Edit. Prod.: #{cadastroProdutoBean.produto.sku}"/> 
         
         <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
-        value="Noco Produto"/> 
+        value="Novo Produto"/> 
 	</ui:define>
     <ui:define name="corpo">
     <f:metadata>
@@ -24,7 +24,7 @@
 	        	value="Editando Produto: #{cadastroProdutoBean.produto.sku} - #{cadastroProdutoBean.produto.nome} "/> 
 	        
 		        <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
-		        value="Noco Produto"/> 
+		        value="Novo Produto"/> 
 	        </h1>           
             
             <p:messages autoUpdate="true" closable="true"></p:messages>

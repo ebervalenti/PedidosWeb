@@ -198,7 +198,7 @@ public class Pedido implements Serializable {
 		return !isNovo();    			
 	}
     
-    @Transient
+    
     public void recalcularValorTotal() {
 		BigDecimal total = BigDecimal.ZERO;
 		
@@ -209,12 +209,14 @@ public class Pedido implements Serializable {
 				total = total.add(item.getValorTotal());				
 			}			
 		}		
-		this.setValorTotal(total); 		
+			this.setValorTotal(total);
+			
 	}
     
     @Transient
     public BigDecimal getValorSubTotal(){
-		return this.getValorTotal().subtract(this.getValorFrete().add(this.getValorDesconto()));    	
+    	return this.getValorTotal().subtract(this.getValorFrete()).
+    			add(this.getValorDesconto());				
     }
     
     //primeiro produto da lista de todos os itens
@@ -234,7 +236,26 @@ public class Pedido implements Serializable {
     public boolean isOrcamento() {		
 		return StatusPedido.ORCAMENTO.equals(this.getStatus());
 	}
-
+    
+    
+    public void removerItemVazio() {
+    	ItemPedido primeiroitem  = this.getItensPedidos().get(0);
+    	
+    	if (primeiroitem != null && primeiroitem.getId() == null) {
+			this.getItensPedidos().remove(0);
+		}   	
+    } 
+    
+    @Transient
+    public boolean isValorNegativo() {    	
+    	return this.getValorTotal().compareTo(BigDecimal.ZERO)<0;
+    }
+    
+    @Transient
+    public boolean isEmitido() {
+    	return StatusPedido.EMITIDO.equals(this.getStatus());    	
+    	
+    }
 	/************************************** hashCode E equals ********************************************/
     @Override
 	public int hashCode() {
@@ -259,5 +280,8 @@ public class Pedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}   
+	}
+
+
+
 }

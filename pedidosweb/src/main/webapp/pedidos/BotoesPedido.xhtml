@@ -3,24 +3,32 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui" >
-    
-    <p:toolbar>            
-        <p:toolbarGroup> 
-            <p:button value="Novo" outcome="/pedidos/CadastroPedido"/>
-            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}"
-            	update="@form"/>
-        </p:toolbarGroup>
-
-        <p:toolbarGroup align="right"> 
-            <p:commandButton value="Emitir"/>
-            <p:commandButton value="Cancelar"/>
-            <p:commandButton value="Enviar por e-mail"/>
-            <p:separator/>
-            <p:button value="Pesquisa" outcome="/pedidos/PesquisaPedido"/>                
-        </p:toolbarGroup>           
-
-</p:toolbar>         
-          
+    xmlns:p="http://primefaces.org/ui" >  
+   
+	    <p:toolbar>            
+	        <p:toolbarGroup> 
+	            <p:button value="Novo" outcome="/pedidos/CadastroPedido"/>             
+	           
+	            <p:commandButton value="Salvar" oncomplete="confirmarSalvar.show()" process="@this"/>
+	           	 
+	           	 <!-- mensagem de salvar pedido -->
+	            <p:confirmDialog header="Salvar Produto" message="Realmente deseja salvar o pedido?" 
+            		widgetVar="confirmarSalvar" id="confirmaSalvarDialog">         		
+            		
+           		<p:commandButton value="Sim" action="#{cadastroPedidoBean.salvar}"
+            	update="@form" oncomplete="confirmarSalvar.hide();"/>           	
+	            	
+	            <p:button value="Não" onclick="confirmarSalvar.hide(); return false;" />
+	            </p:confirmDialog> 
+	        </p:toolbarGroup>
+	
+	        <p:toolbarGroup align="right"> 
+	            <p:commandButton value="Emitir"/>
+	            <p:commandButton value="Cancelar"/>
+	            <p:commandButton value="Enviar por e-mail"/>
+	            <p:separator/>
+	            <p:button value="Pesquisa" outcome="/pedidos/PesquisaPedido"/>                
+	        </p:toolbarGroup> 
+	</p:toolbar>            
 </ui:composition>
   

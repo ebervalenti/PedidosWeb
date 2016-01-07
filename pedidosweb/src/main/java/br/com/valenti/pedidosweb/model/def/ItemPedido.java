@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
+
 /**
  *
  * @author Eber Lasso
@@ -103,7 +105,21 @@ public class ItemPedido implements Serializable{
 		return this.getProduto() != null && this.getProduto().getId() != null;
 	}
     
-    /************************************** hashCode E equals ********************************************/
+    @Transient
+    public boolean isEstoqueSuficiente(){    	
+		return this.getPedido().isEmitido() || 
+				this.getProduto().getId() == null ||
+				((this.getProduto().getQuantidadeEstoque() >= this.getQuantidade()));
+    }
+    
+    @Transient
+    public boolean isEstoqueInsuficiente(){    	
+		return !isEstoqueSuficiente();
+    }
+    
+    
+
+	/************************************** hashCode E equals ********************************************/
     
     @Override
     public int hashCode() {

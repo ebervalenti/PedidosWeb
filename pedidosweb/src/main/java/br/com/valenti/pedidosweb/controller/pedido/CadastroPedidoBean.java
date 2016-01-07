@@ -22,6 +22,7 @@ import br.com.valenti.pedidosweb.model.repository.Usuarios;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
 import br.com.valenti.pedidosweb.services.CadastroPedidoServices;
+import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 import br.com.valenti.pedidosweb.validation.SKU;
 
@@ -107,12 +108,17 @@ public class CadastroPedidoBean implements Serializable{
 	}
 
 	/************************************** MÉTODOS ********************************************/	
-	public void salvar() {
-		this.pedido = this.cadastroPedidoService.salvar(this.pedido);		
+	public void salvar() {		
+		/*método criado para remover o primeiro item vazio do pedido, 
+		pois este é o elemento usado na linha de inserção de itens do pedido */
+		this.pedido.removerItemVazio();
 		
-		FacesUtil.addInfoMessage("Pedido salvo com sucesso!.");
-		
-		limpar();
+		try {			
+			this.pedido = this.cadastroPedidoService.salvar(this.pedido);	
+			FacesUtil.addInfoMessage("Pedido salvo com sucesso!.");
+		} finally {
+			this.pedido.adicionarItemVazio();
+		}					
 	}
 	
 	private void limpar(){
@@ -142,9 +148,9 @@ public class CadastroPedidoBean implements Serializable{
 	
 	//Chama o método de recalcular na classe pedido para atualizar o total do pedido tela.
 	public void recalcularPedido(){
-		if (this.pedido != null) {
-			this.pedido.recalcularValorTotal();			
-		}		
+		if (this.pedido != null) {			
+			this.pedido.recalcularValorTotal();				
+		}	
 	}
 	
 	//troca o label da tela de cadastro para edição ou novo pedido	
@@ -164,7 +170,8 @@ public class CadastroPedidoBean implements Serializable{
 		if (this.produtoLinhaEditavel != null) {
 			if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
 				FacesUtil.addErrorMessage("Jé existe um item com o produto informado.");
-			}
+				this.produtoLinhaEditavel = null;
+			}		
 			else{			
 				item.setProduto(this.produtoLinhaEditavel);
 				item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
@@ -195,8 +202,18 @@ public class CadastroPedidoBean implements Serializable{
 		if (StringUtils.isNotEmpty(this.sku)) {
 			this.produtoLinhaEditavel = this.produtos.porSku(this.sku);			
 			this.carregarProdutoLinhaEditavel();			
-		}
-		
+		}		
 	}
 	
+	public void atualizarQuantidade(ItemPedido item, int linha){
+		if (item.getQuantidade() < 1) {
+			if (linha == 0) {
+				item.setQuantidade(1);
+			}
+			else{
+				this.getPedido().getItensPedidos().remove(linha);
+			}
+		}	
+		this.pedido.recalcularValorTotal();	
+	}		
 }

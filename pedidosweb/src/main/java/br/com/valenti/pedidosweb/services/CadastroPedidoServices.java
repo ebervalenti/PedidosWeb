@@ -31,16 +31,21 @@ public class CadastroPedidoServices implements Serializable {
 	/************************************** MÉTODOS ********************************************/
 	@Transacional
 	public Pedido salvar(Pedido pedido){
-		if (pedido.isNovo()) {
-			System.out.println("if (pedido.isNovo())");
+		if (pedido.isNovo()) {			
 			pedido.setDataCriacao(new Date());			
 			pedido.setStatus(StatusPedido.ORCAMENTO);			
-		}
-		pedido = this.pedidos.guardar(pedido);
-		return pedido;
+		}	
 		
+		if (pedido.getItensPedidos().isEmpty()) {
+			throw new NegocioException("Não é possivel salvar pedido sem itens.");
+		}
+		
+		if (pedido.isValorNegativo()) {
+			throw new NegocioException("Total do pedido inconcistente. ");			
+		}
+		
+		pedido.recalcularValorTotal();		
+		pedido = this.pedidos.guardar(pedido);
+		return pedido;		
 	}
-
-	
-
 }

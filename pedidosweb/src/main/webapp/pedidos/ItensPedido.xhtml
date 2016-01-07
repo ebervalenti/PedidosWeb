@@ -5,18 +5,20 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui" >
     
-    <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" id="itensTable">
+    <!-- AO ALTERAR VALORES NA TELA COM EVENTO AJAX FAZER UPDATE EM: 
+    itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido  -->
+    
+   
+    <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" rowIndexVar="linha" id="itensTable">
         <p:column headerText="SKU" style="text-align: center; width: 100px">
             <h:outputText value="#{item.produto.sku}" rendered="#{item.produtoAssociado}"/>
             
             <p:inputText size="8" value="#{cadastroPedidoBean.sku}" label="SKU" 
             rendered="#{not item.produtoAssociado}">
             
-            <p:ajax event="change" process="@this" update="itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido"
+            <p:ajax event="change" update="itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido"
 			listener="#{cadastroPedidoBean.carregarProdutoPorSku}"/>
-            </p:inputText> 
-            
-                       
+            </p:inputText>                      
         </p:column>
         
         <p:column headerText="Produto" style="text-align: center; width: 120px">
@@ -38,11 +40,25 @@
         </p:column>
         
         <p:column headerText="Quantidade" style="text-align: center; width: 100px">
-            <p:inputText size="8" value="#{item.quantidade}"/>                       
+            <p:inputText size="8" value="#{item.quantidade}">
+            	<p:ajax event="change" process="@this" update="itensTable :frmCadastroPedido:subtotal 
+            	:frmCadastroPedido:totalPedido" listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}" />
+            </p:inputText>                       
         </p:column>
         
         <p:column headerText="Estoque" style="text-align: center; width: 100px">
-            <h:outputText value="#{item.produto.quantidadeEstoque}"/>       
+            <h:outputText value="#{item.produto.quantidadeEstoque}" 
+            style="#{item.estoqueInsuficiente ? 'color: red' : 'color: green'}"/> 
+            															   
+            <h:graphicImage library="images" name="alertaNegativo.png" id="semEstoque"
+            rendered="#{item.estoqueInsuficiente  == true}" style="vertical-align:bottom; margin-left:5px"/> 
+            
+            <h:graphicImage library="images" name="alertaPositivo.png" id="comEstoque"
+            rendered="#{item.estoqueSuficiente  == true}" style="vertical-align:center; margin-left:5px " /> 
+            
+            <p:tooltip for="semEstoque" value="Estoque insuficiente." rendered="#{item.estoqueInsuficiente}"/>
+            
+            <p:tooltip for="comEstoque" value="Estoque suficiente." rendered="#{item.estoqueSuficiente}"/>     
         </p:column>
         
         <p:column headerText="Valor total" style="text-align: right; width: 100px">
@@ -51,19 +67,18 @@
             </h:outputText>       
         </p:column>
         
-        <p:columnGroup type="footer">
+        <p:columnGroup type="footer" >
             <p:row>
                 <p:column colspan="5" footerText="Subtotal" style="text-align: right"/>
                 <p:column style="text-align: right">                    
                 	<f:facet name="footer">
-                		<h:outputText value="#{cadastroPedidoBean.pedido.valorSubTotal}"> 
-                			<f:convertNumber type="currency"/>
-                		</h:outputText>
+                		<h:outputLabel value="#{cadastroPedidoBean.pedido.valorSubTotal}" id="subTotalFooter"> 
+                			<f:convertNumber type="currency"/>	
+                		</h:outputLabel>
                 	</f:facet>
                 </p:column>                   
             </p:row>
         </p:columnGroup>
-    </p:dataTable>
-          
+    </p:dataTable>         
 </ui:composition>
   
