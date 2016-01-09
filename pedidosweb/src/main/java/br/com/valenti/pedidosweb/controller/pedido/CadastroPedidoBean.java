@@ -3,12 +3,15 @@ package br.com.valenti.pedidosweb.controller.pedido;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.event.Observes;
+import javax.enterprise.inject.Produces;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
 import br.com.valenti.pedidosweb.model.def.EnderecoEntrega;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
@@ -21,7 +24,7 @@ import br.com.valenti.pedidosweb.model.repository.Produtos;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
-import br.com.valenti.pedidosweb.services.CadastroPedidoServices;
+import br.com.valenti.pedidosweb.services.CadastroPedidoService;
 import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 import br.com.valenti.pedidosweb.validation.SKU;
@@ -35,6 +38,8 @@ public class CadastroPedidoBean implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
+    @Produces
+    @PedidoEdicao
     private Pedido pedido;
     
     @Inject
@@ -48,7 +53,7 @@ public class CadastroPedidoBean implements Serializable{
     private PessoaFilter cliente = new PessoaFilter();
 	
     @Inject
-    private CadastroPedidoServices cadastroPedidoService;
+    private CadastroPedidoService cadastroPedidoService;
     
     private Produto produtoLinhaEditavel;
     
@@ -105,6 +110,10 @@ public class CadastroPedidoBean implements Serializable{
 
 	public void setSku(String sku) {
 		this.sku = sku;
+	}
+	
+	public void name() {
+		
 	}
 
 	/************************************** MÉTODOS ********************************************/	
@@ -215,5 +224,19 @@ public class CadastroPedidoBean implements Serializable{
 			}
 		}	
 		this.pedido.recalcularValorTotal();	
-	}		
+	}	
+	
+	/*
+	  este método funciona da seguinte forma:
+	  1 -Foi criado um controller de evento para atualizar o pedido com o nome "PedidoAlteradoEvent"
+	    1.1 - Este método vai pegar o "pedido" instanciado em "PedidoAlteradoEvent"
+      
+      2 - a anotação @Observes vai observar quando "PedidoAlteradoEvent event" for chamado passando para 
+      a variável "event" o pedido . Esse método vai ser disparado em "EmissaoPedidoBean" 
+      no método this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
+	 */
+	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
+		this.pedido = event.getPedido();
+		
+	}
 }

@@ -256,6 +256,42 @@ public class Pedido implements Serializable {
     	return StatusPedido.EMITIDO.equals(this.getStatus());    	
     	
     }
+    
+    @Transient
+    public boolean isNaoEmissivel() {    	
+    	return !this.isEmissivel();
+    }
+    
+    @Transient
+    public boolean isEmissivel() {    	
+    	return this.isExistente() && this.isOrcamento();
+    }
+    
+    @Transient
+    public boolean isNaoCancelavel() {    	
+    	return !this.isCancelavel();
+    }
+    
+    @Transient
+	private boolean isCancelavel() {		
+		return this.isExistente() && !this.isCancelado();
+	}
+    
+    @Transient
+	private boolean isCancelado() {		
+		return StatusPedido.CANCELAD0.equals(this.getStatus());
+	}
+    
+    @Transient
+    public boolean isNaoAlteravel() {    	
+    	return !this.isAlteravel();
+    }
+    
+    @Transient
+	private boolean isAlteravel() {		
+		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+	}
+
 	/************************************** hashCode E equals ********************************************/
     @Override
 	public int hashCode() {
@@ -281,6 +317,9 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
+
+
+
 
 
 

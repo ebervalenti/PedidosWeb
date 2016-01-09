@@ -117,5 +117,8 @@ footer{
 }
 /* Menu sistema fim */
 
-
+.ui-state-disabled{
+	opacity: .80 !important;
+	
+}
 

@@ -7,9 +7,6 @@ import java.util.List;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import br.com.valenti.pedidosweb.model.def.Categoria;
 import br.com.valenti.pedidosweb.model.def.Produto;

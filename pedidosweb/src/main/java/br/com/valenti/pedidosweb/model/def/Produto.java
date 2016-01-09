@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.validation.SKU;
 
 /**
@@ -118,6 +120,20 @@ public class Produto implements Serializable{
         this.categoria = categoria;
     }
     
+    @Transient
+    public void baixarEstoque(Integer quantidade) {
+    	int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
+    	if (novaQuantidade < 0) {
+			throw new NegocioException("Quantidade de estoque insuficiente para o produto:  "+
+					this.getSku() +" - "+this.getNome()+".");
+		}    	
+    	this.setQuantidadeEstoque(novaQuantidade);   	
+    }
+    
+    @Transient
+    public void adicionarEstoque(Integer quantidade) {
+    	this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);    	
+    }
     /************************************** hashCode E equals ********************************************/
 
     @Override
@@ -141,4 +157,6 @@ public class Produto implements Serializable{
         }
         return true;
     }
+
+
 }

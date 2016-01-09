@@ -15,7 +15,7 @@ import br.com.valenti.pedidosweb.util.jpa.Transacional;
 
 /**  Criado por: Eber Lasso  **/
 
-public class CadastroPedidoServices implements Serializable {	
+public class CadastroPedidoService implements Serializable {	
 	/************************************** PROPRIEDADES ********************************************/
 	private static final long serialVersionUID = 1L;
 	
@@ -42,6 +42,11 @@ public class CadastroPedidoServices implements Serializable {
 		
 		if (pedido.isValorNegativo()) {
 			throw new NegocioException("Total do pedido inconcistente. ");			
+		}
+		
+		if (pedido.isNaoAlteravel()) {
+			throw new NegocioException("Pedido já " + pedido.getStatus().getDescricao().toUpperCase() + 
+					" não pode ser alterado." );
 		}
 		
 		pedido.recalcularValorTotal();		
