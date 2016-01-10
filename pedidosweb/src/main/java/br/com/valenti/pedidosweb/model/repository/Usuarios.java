@@ -43,7 +43,7 @@ public class Usuarios implements Serializable {
 Usuario usuario = null;
 		
 		try {
-			return this.manager.createQuery(" from Ususario where lower(username) = :username ", 
+			return this.manager.createQuery(" from Usuario where lower(username) = :username ", 
 					Usuario.class).setParameter("username", username.toLowerCase()).
 					getSingleResult();				
 		} catch (Exception e) {

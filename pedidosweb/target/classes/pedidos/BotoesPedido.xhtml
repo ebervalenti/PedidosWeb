@@ -25,9 +25,9 @@
 	
 	        <p:toolbarGroup align="right"> 
 	            <p:commandButton value="Emitir" action="#{emissaoPedidoBean.emitirPedido}" process="@form" update="@form"
-	            disabled="#{cadastroPedidoBean.pedido.naoEmissivel}"/>
+	            disabled="#{cadastroPedidoBean.pedido.naoEmissivel or not seguranca.emitirPedido_Permitido}"/>
 	            <p:commandButton value="Cancelar" action="#{cancelamentoPedidoBean.cancelarPedido}" process="@this" update="@form"
-	            disabled="#{cadastroPedidoBean.pedido.naoCancelavel}"/>
+	            disabled="#{cadastroPedidoBean.pedido.naoCancelavel or not seguranca.cancelarPedido_Permitido}"/>
 	            <p:commandButton value="Enviar por e-mail"/>                      
 	            <p:separator/>
 	            <p:button value="Pesquisa" outcome="/pedidos/PesquisaPedido"/>                
