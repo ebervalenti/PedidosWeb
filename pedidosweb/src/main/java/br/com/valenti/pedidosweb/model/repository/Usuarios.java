@@ -38,4 +38,17 @@ public class Usuarios implements Serializable {
 		return this.manager.createQuery("from Usuario ", Usuario.class)
 				.getResultList();		
 	}
+
+	public Usuario porUserName(String username) {
+Usuario usuario = null;
+		
+		try {
+			return this.manager.createQuery(" from Ususario where lower(username) = :username ", 
+					Usuario.class).setParameter("username", username.toLowerCase()).
+					getSingleResult();				
+		} catch (Exception e) {
+			// TODO: nenhum usuário encontrado com o esername informado
+		}
+		return usuario;		
+	}
 }

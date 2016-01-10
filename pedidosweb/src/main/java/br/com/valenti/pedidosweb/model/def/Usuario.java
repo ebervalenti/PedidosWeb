@@ -36,6 +36,8 @@ public class Usuario implements Serializable{
     
     private String senha;
     
+    private String userName;
+    
     @ManyToMany(cascade = CascadeType.ALL)	
     private List<Grupo> grupos = new ArrayList();
     
@@ -88,7 +90,17 @@ public class Usuario implements Serializable{
         this.grupos = grupos;
     }
     
-    /************************************** hashCode E equals ********************************************/
+    
+    @Column(nullable = false, length = 20)
+    public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	/************************************** hashCode E equals ********************************************/
 
     @Override
     public int hashCode() {
@@ -111,8 +123,5 @@ public class Usuario implements Serializable{
         }
         return true;
     }
-    
-    
-	
 
 }
