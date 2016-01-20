@@ -12,7 +12,8 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
-import br.com.valenti.pedidosweb.model.def.EnderecoEntrega;
+import br.com.valenti.pedidosweb.model.def.Empresa;
+import br.com.valenti.pedidosweb.model.def.Endereco;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.def.Pessoa;
@@ -24,6 +25,7 @@ import br.com.valenti.pedidosweb.model.repository.Produtos;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
+import br.com.valenti.pedidosweb.security.Seguranca;
 import br.com.valenti.pedidosweb.services.CadastroPedidoService;
 import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
@@ -63,6 +65,11 @@ public class CadastroPedidoBean implements Serializable{
     private ProdutoFilter produtoFiltro = new ProdutoFilter();
     
     private String sku;
+    
+    @Inject
+    private Seguranca seguranca;
+    
+    private Empresa empresaPedido;
 	
 	/************************************** CONSTRUTOR ********************************************/
 	
@@ -123,6 +130,8 @@ public class CadastroPedidoBean implements Serializable{
 		this.pedido.removerItemVazio();
 		
 		try {			
+			this.pedido.setEmpresa(seguranca.getUsuario().getEmpresa());
+			this.pedido.setUsuarioLogado(seguranca.getUsuario());			
 			this.pedido = this.cadastroPedidoService.salvar(this.pedido);	
 			FacesUtil.addInfoMessage("Pedido salvo com sucesso!.");
 		} finally {
@@ -132,7 +141,8 @@ public class CadastroPedidoBean implements Serializable{
 	
 	private void limpar(){
 		pedido = new Pedido();
-		pedido.setEnderecoEntrega(new EnderecoEntrega());			
+		pedido.setEnderecoEntrega(new Endereco());
+		empresaPedido = new Empresa();
 	}
 	
 	public void inicializar() {

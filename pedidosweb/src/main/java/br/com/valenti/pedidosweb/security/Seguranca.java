@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import br.com.valenti.pedidosweb.model.def.Usuario;
+
 @Named
 @RequestScoped
 public class Seguranca {
@@ -21,19 +23,19 @@ public class Seguranca {
 	/************************************** SETS ********************************************/
 
 	/************************************** MÉTODOS ********************************************/
-	public String getNomeUsuario() {
-		String nome = null;
+	public Usuario getUsuario() {
+		Usuario usuario = null;
 		
-		UsuarioSistema usuarioLogado = getNomeUsuarioLogado();
+		UsuarioSistema usuarioLogado = getUsuarioLogado();
 		
 		if (usuarioLogado != null) {
-			nome = usuarioLogado.getUsuario().getNome();
+			usuario = usuarioLogado.getUsuario();
 		}
 		
-		return nome;
+		return usuario;
 	}
 
-	private UsuarioSistema getNomeUsuarioLogado() {
+	private UsuarioSistema getUsuarioLogado() {
 		UsuarioSistema usuario = null;
 		
 		UsernamePasswordAuthenticationToken auth = (UsernamePasswordAuthenticationToken) 
@@ -52,7 +54,8 @@ public class Seguranca {
 		 * é do tipo ADMINISTRADORES ou ?
 		*/
 		return externalcontext.isUserInRole("ADMINISTRADORES") ||
-				externalcontext.isUserInRole("VENDEDORES");
+				externalcontext.isUserInRole("VENDEDORES")||
+				externalcontext.isUserInRole("MASTER");
 		
 	}
 	
@@ -62,7 +65,8 @@ public class Seguranca {
 			 * é do tipo ADMINISTRADORES ou ?
 			*/
 			return externalcontext.isUserInRole("ADMINISTRADORES") ||
-					externalcontext.isUserInRole("VENDEDORES");
+					externalcontext.isUserInRole("VENDEDORES")||
+					externalcontext.isUserInRole("MASTER");
 			
 		}
 

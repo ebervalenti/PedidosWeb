@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,6 +28,7 @@ import javax.validation.constraints.NotNull;
 
 import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
+import br.com.valenti.pedidosweb.security.UsuarioSistema;
 
 /**
  *
@@ -50,8 +52,11 @@ public class Pedido implements Serializable {
     private FormaPagamento formaPagamento;   
     private Usuario vendedor;   
     private Pessoa cliente;  
-    private EnderecoEntrega enderecoEntrega;   
+    private Endereco enderecoEntrega;   
     private List<ItemPedido> itensPedidos = new ArrayList<ItemPedido>();
+    private Usuario usuarioLogado;
+    private Empresa empresa;
+    
     
     /************************************** GETS E SETS ********************************************/
     @Id
@@ -169,11 +174,11 @@ public class Pedido implements Serializable {
     }
 
     @Embedded
-    public EnderecoEntrega getEnderecoEntrega() {
+    public Endereco getEnderecoEntrega() {
         return enderecoEntrega;
     }
 
-    public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
+    public void setEnderecoEntrega(Endereco enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
     }
     
@@ -186,9 +191,34 @@ public class Pedido implements Serializable {
 
     public void setItensPedidos(List<ItemPedido> itensPedidos) {
         this.itensPedidos = itensPedidos;
-    }
-    
-    @Transient
+    }      
+
+    @NotNull
+    @OneToOne
+    @JoinColumn(name="usuario_id", nullable=false)
+	public Usuario getUsuarioLogado() {
+		return usuarioLogado;
+	}
+
+	public void setUsuarioLogado(Usuario usuarioLogado) {
+		this.usuarioLogado = usuarioLogado;
+	}	
+	
+	
+	@NotNull
+    @OneToOne
+    @JoinColumn(name="empresa_id", nullable=false)
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	/************************************** MÉTODOS ********************************************/	
+
+	@Transient
     public boolean isNovo(){    	
 		return getId() == null;    	
     }

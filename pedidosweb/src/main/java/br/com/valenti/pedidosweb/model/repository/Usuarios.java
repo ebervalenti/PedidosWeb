@@ -40,7 +40,7 @@ public class Usuarios implements Serializable {
 	}
 
 	public Usuario porUserName(String username) {
-Usuario usuario = null;
+		Usuario usuario = null;
 		
 		try {
 			return this.manager.createQuery(" from Usuario where lower(username) = :username ", 

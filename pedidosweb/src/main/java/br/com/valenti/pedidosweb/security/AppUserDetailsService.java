@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Grupo;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
@@ -36,14 +37,18 @@ public class AppUserDetailsService implements UserDetailsService {
 		
 		if (username.equals("master")) {
 			Grupo grupo = new Grupo();
-			grupo.setId(new Long(0));
+			grupo.setId(new Long(999999));
 			grupo.setNome("Master");
 			
-			usuario.setId(new Long(0));
+			Empresa empresa = new Empresa();
+			empresa.setId(new Long(999999));
+			
+			usuario.setId(new Long(999999));
 			usuario.setUserName(username);
 			usuario.setSenha("b59c67bf196a4758191e42f76670ceba");
 			usuario.getGrupos().add(grupo);
 			usuario.setNome("Master");
+			usuario.setEmpresa(empresa);
 			
 			user = new UsuarioSistema(usuario, getGrupos(usuario));
 		}

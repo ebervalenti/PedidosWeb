@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +18,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.mapping.Array;
@@ -42,7 +46,7 @@ public class Pessoa implements Serializable {
 	private String docRF;
 	private TipoPessoa tipo;
 	private FisicaJuridica fj;
-	private List<Endereco> endereco = new ArrayList<>();
+	private Endereco endereco;
 
 	/************************************** GETS E SETS ********************************************/
 	@Id
@@ -90,20 +94,16 @@ public class Pessoa implements Serializable {
 
 	public void setFj(FisicaJuridica fj) {
 		this.fj = fj;
-	}
-	
-	
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-	public List<Endereco> getEndereco() {
-		return endereco;
 	}	
 	
+	@Embedded
+	public Endereco getEndereco() {
+		return endereco;
+	}
 
-	public void setEndereco(List<Endereco> endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
-	
 
 	/************************************** hashCode E equals ********************************************/
 

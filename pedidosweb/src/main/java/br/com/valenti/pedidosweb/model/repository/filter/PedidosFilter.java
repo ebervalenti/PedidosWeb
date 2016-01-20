@@ -6,7 +6,12 @@ package br.com.valenti.pedidosweb.model.repository.filter;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import br.com.valenti.pedidosweb.model.def.Empresa;
+import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
+import br.com.valenti.pedidosweb.security.Seguranca;
 import br.com.valenti.pedidosweb.validation.SKU;
 
 /**  Criado por: Eber Lasso  **/
@@ -26,6 +31,11 @@ public class PedidosFilter implements Serializable {
 	private String cliente;
 	
 	private StatusPedido[] statusPedido;
+	
+	private Empresa empresa;
+	
+	@Inject
+	private Seguranca seguranca;
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -56,10 +66,12 @@ public class PedidosFilter implements Serializable {
 
 	public StatusPedido[] getStatusPedido() {
 		return statusPedido;
+	}	
+
+	public Empresa getEmpresa() {
+		return empresa;
 	}
-	
-	
-		
+
 	/************************************** SETS ********************************************/
 	
 	public void setNumPedidoIni(Long numPedidoIni) {
@@ -89,8 +101,10 @@ public class PedidosFilter implements Serializable {
 	public void setStatusPedido(StatusPedido[] statusPedido) {
 		this.statusPedido = statusPedido;
 	}
-	
-		
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}		
 	/************************************** MÉTODOS ********************************************/
 
 	/************************************** hashCode E equals ********************************************/

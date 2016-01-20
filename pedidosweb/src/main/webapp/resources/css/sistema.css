@@ -39,9 +39,9 @@ h1{
 
 
 footer{
-    padding: 0px 8px;
+    padding: 0px 0px;
     margin-bottom: 10px;
-    margin-left: 8px;
+    margin-left: 0px;
     
 }
 
@@ -83,7 +83,7 @@ footer{
     width: 700px;
 }
 
-/* CUSTOMIZA TABLE VIEW - INÃ�CIO*/
+/* CUSTOMIZA TABLE VIEW - INício*/
 .ui-tabs .ui-tabs-panel{
     padding: 0.5em 0.2em !important;    
 }
@@ -99,7 +99,7 @@ footer{
 .ui-tabs .ui-tabs-top > .ui-tabs-nav{
     padding: 0px !important;
 }
-/* CUSTOMIZA TABLE VIEW - INÃ�CIO*/
+/* CUSTOMIZA TABLE VIEW - FIM*/
 
 /* Menu sistema inicio */
 .menu-sistema {
@@ -118,7 +118,6 @@ footer{
 /* Menu sistema fim */
 
 .ui-state-disabled{
-	opacity: .80 !important;
-	
+	opacity: .80 !important;	
 }
-
+.

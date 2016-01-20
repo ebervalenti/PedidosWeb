@@ -18,6 +18,8 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.repository.filter.PedidosFilter;
+import br.com.valenti.pedidosweb.security.Seguranca;
+import br.com.valenti.pedidosweb.security.UsuarioSistema;
 /**
  * @author Eber
  *
@@ -29,6 +31,8 @@ public class Pedidos implements Serializable {
 	@Inject
 	private EntityManager manager;
 	
+	@Inject
+	private Seguranca  seguranca;
 	
 
 	/************************************** CONSTRUTOR ********************************************/
@@ -48,7 +52,15 @@ public class Pedidos implements Serializable {
 				//alias para determinar "c" como cliente
 				.createAlias("cliente", "c")
 				//alias para determinar "v" como vendedor
-				.createAlias("vendedor", "v");
+				.createAlias("vendedor", "v")
+				//alias para determinar "e" como vendedor
+				.createAlias("empresa", "e");
+		
+		System.out.println(filtro.getEmpresa());
+		
+		if (filtro.getEmpresa().getId() != 999999) {
+			criteria.add(Restrictions.eq("e.id",filtro.getEmpresa().getId()));			
+		}
 		
 		if (filtro.getNumPedidoIni() !=null) {
 			// numPedidoIni = data inicio do pedido -  deve ser maior ou igual (ge = greater or equals) a getNumPedidoIni
@@ -97,11 +109,11 @@ public class Pedidos implements Serializable {
 		return manager.createQuery("from Pedido where categoriaPai = :raiz ", Pedido.class)
 				.setParameter("raiz", categoriaPai)
 				.getResultList();
-	}
-	
+	}	
 	
 	public Pedido guardar(Pedido pedido) {		
 		return this.manager.merge(pedido);
+		
 	}
 	
 

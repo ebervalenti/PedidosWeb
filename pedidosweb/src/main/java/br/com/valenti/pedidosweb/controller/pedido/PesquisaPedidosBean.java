@@ -12,6 +12,7 @@ import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 import br.com.valenti.pedidosweb.model.repository.Pedidos;
 import br.com.valenti.pedidosweb.model.repository.filter.PedidosFilter;
+import br.com.valenti.pedidosweb.security.Seguranca;
 
 @Named
 @ViewScoped
@@ -26,6 +27,9 @@ public class PesquisaPedidosBean implements Serializable {
 	
 	@Inject
 	Pedidos pedidos;
+	
+	@Inject
+	private Seguranca seguranca;
 		
 
 	/************************************** CONSTRUTOR ********************************************/
@@ -48,12 +52,12 @@ public class PesquisaPedidosBean implements Serializable {
 		this.pedidosFiltrados = pedidosFiltrados;
 	}
 
-
 	public void setFiltro(PedidosFilter filtro) {
 		this.filtro = filtro;
 	}
 	/************************************** MÉTODOS ********************************************/
-	public void pesquisar(){
+	public void pesquisar(){		
+		filtro.setEmpresa(seguranca.getUsuario().getEmpresa());		
 		pedidosFiltrados = pedidos.filtrados(filtro);
 	}
 	

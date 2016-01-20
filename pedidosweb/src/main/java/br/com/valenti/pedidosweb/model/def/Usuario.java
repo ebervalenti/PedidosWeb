@@ -9,11 +9,14 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -40,6 +43,8 @@ public class Usuario implements Serializable{
     
     @ManyToMany(cascade = CascadeType.ALL)	
     private List<Grupo> grupos = new ArrayList();
+    
+    private Empresa empresa;
     
     /************************************** GETS E SETS ********************************************/
 	@Id
@@ -98,6 +103,17 @@ public class Usuario implements Serializable{
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}	
+
+	@NotNull
+    @OneToOne
+    @JoinColumn(name="empresa_id", nullable=false)
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	/************************************** hashCode E equals ********************************************/
