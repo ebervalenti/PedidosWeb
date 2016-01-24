@@ -39,9 +39,8 @@ public class Usuario implements Serializable{
     
     private String senha;
     
-    private String userName;
+    private String userName;    
     
-    @ManyToMany(cascade = CascadeType.ALL)	
     private List<Grupo> grupos = new ArrayList();
     
     private Empresa empresa;

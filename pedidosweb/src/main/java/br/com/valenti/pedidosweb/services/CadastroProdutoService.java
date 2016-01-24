@@ -29,7 +29,7 @@ public class CadastroProdutoService implements Serializable {
 	@Transacional /* interceptador para criar a transação - se este método executar sem erros 
 	 					essa anotação fará o commit se não fará o rollback */ 
 	public Produto salvar(Produto produto){
-		 Produto produtoExistente = produtos.porSku(produto.getSku());
+		 Produto produtoExistente = produtos.porId(produto.getId());
 		 
 		 if (produtoExistente != null && !produtoExistente.equals(produto)){
 			 

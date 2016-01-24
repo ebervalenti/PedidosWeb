@@ -8,7 +8,7 @@
     
      <ui:define name="titulo">
 		<h:outputText rendered="#{cadastroProdutoBean.editando == true}" 
-        value="Edit. Prod.: #{cadastroProdutoBean.produto.sku}"/> 
+        value="Edit. Prod.: #{cadastroProdutoBean.produto.id}"/> 
         
         <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
         value="Novo Produto"/> 
@@ -21,7 +21,7 @@
         <h:form>
 	        <h1>
 	            <h:outputText rendered="#{cadastroProdutoBean.editando == true}" 
-	        	value="Editando Produto: #{cadastroProdutoBean.produto.sku} - #{cadastroProdutoBean.produto.nome} "/> 
+	        	value="Editando Produto: #{cadastroProdutoBean.produto.id} - #{cadastroProdutoBean.produto.nome} "/> 
 	        
 		        <h:outputText rendered="#{cadastroProdutoBean.editando == false}" 
 		        value="Novo Produto"/> 
@@ -42,8 +42,10 @@
             </p:toolbar>
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
+                <!-- 
                 <p:outputLabel value="SKU" for="sku"/>
                 <p:inputText id="sku" size="20" maxlength="20" value="#{cadastroProdutoBean.produto.sku}"/>
+                --> 
 
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroProdutoBean.produto.nome}"/>

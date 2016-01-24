@@ -1,6 +1,7 @@
 package br.com.valenti.pedidosweb.controller.pedido;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.event.Observes;
@@ -69,7 +70,7 @@ public class CadastroPedidoBean implements Serializable{
     @Inject
     private Seguranca seguranca;
     
-    private Empresa empresaPedido;
+    private Empresa empresaPedido;   
 	
 	/************************************** CONSTRUTOR ********************************************/
 	
@@ -109,7 +110,7 @@ public class CadastroPedidoBean implements Serializable{
 	public void setProdutoFiltro(ProdutoFilter produtoFiltro) {
 		this.produtoFiltro = produtoFiltro;
 	}	
-
+/*
 	@SKU
 	public String getSku() {
 		return sku;
@@ -118,10 +119,11 @@ public class CadastroPedidoBean implements Serializable{
 	public void setSku(String sku) {
 		this.sku = sku;
 	}
+	*/
 	
-	public void name() {
-		
-	}
+	
+	
+	
 
 	/************************************** MÉTODOS ********************************************/	
 	public void salvar() {		
@@ -140,7 +142,7 @@ public class CadastroPedidoBean implements Serializable{
 	}
 	
 	private void limpar(){
-		pedido = new Pedido();
+		pedido = new Pedido();		
 		pedido.setEnderecoEntrega(new Endereco());
 		empresaPedido = new Empresa();
 	}

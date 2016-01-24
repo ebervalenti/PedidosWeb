@@ -60,8 +60,8 @@
             
             <!-- GRID COM O RESULTADO DA PESQUISA -->            
             <p:dataTable id="pedidosTable" value="#{pesquisaPedidosBean.pedidosFiltrados}" var="pedido" style="margin-top: 20px"
-            	emptyMessage="Nenum pedido encontrado." rows="20" paginator="true" paginatorAlwaysVisible="false" 
-            	paginatorPosition="bottom" >
+            	emptyMessage="Nenum pedido encontrado." rows="5" paginator="true" paginatorAlwaysVisible="true" 
+            	paginatorPosition="top" >
             	
             	<p:column headerText="Número" style="text-align: center; width: 100 px">
                 	<p:outputLabel value="#{pedido.id}"/>                    

@@ -37,7 +37,7 @@ public class CancelamentoPedidoService implements Serializable {
 		}
 		
 		if (pedido.isEmitido()) {
-			this.estoqueService.retornarItensEstoque(pedido);
+			this.estoqueService.incrementaQtdTotalProduto(pedido);
 		}
 		
 		pedido.setStatus(StatusPedido.CANCELAD0);

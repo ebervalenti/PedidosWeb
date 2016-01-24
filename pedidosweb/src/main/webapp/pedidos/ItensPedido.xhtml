@@ -9,7 +9,9 @@
     itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido  -->
     
    
-    <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" rowIndexVar="linha" id="itensTable">
+    <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" rowIndexVar="linha" id="itensTable"
+    paginator="true" rows="10" paginatorAlwaysVisible="true" paginatorPosition="top">
+       <!--  
         <p:column headerText="SKU" style="text-align: center; width: 100px">
             <h:outputText value="#{item.produto.sku}" rendered="#{item.produtoAssociado}"/>
             
@@ -20,6 +22,7 @@
 			listener="#{cadastroPedidoBean.carregarProdutoPorSku}"/>
             </p:inputText>                      
         </p:column>
+        -->
         
         <p:column headerText="Produto" style="text-align: center; width: 120px">
         	<h:outputText value="#{item.produto.nome}" rendered="#{item.produtoAssociado}"/>

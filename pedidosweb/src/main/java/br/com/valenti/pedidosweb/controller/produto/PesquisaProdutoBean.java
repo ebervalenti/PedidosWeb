@@ -63,7 +63,7 @@ public class PesquisaProdutoBean implements Serializable {
 		produtos.excluir(produtoSelecionado);
 		produtosFiltrados.remove(produtoSelecionado);
 		
-		FacesUtil.addInfoMessage("Produto "+produtoSelecionado.getSku()+" - "+
+		FacesUtil.addInfoMessage("Produto "+produtoSelecionado.getId()+" - "+
 				produtoSelecionado.getNome()+" excluído com sucesso.");
 	}
 	

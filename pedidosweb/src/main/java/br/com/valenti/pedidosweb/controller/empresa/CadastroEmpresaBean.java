@@ -1,5 +1,7 @@
 package br.com.valenti.pedidosweb.controller.empresa;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.io.Serializable;
 
 import javax.faces.bean.ViewScoped;
@@ -20,7 +22,7 @@ public class CadastroEmpresaBean implements Serializable {
 	private Empresa empresa;
 	
 	@Inject
-	private CadastroEmpresaService cadastroempresaservice;
+	private CadastroEmpresaService cadastroempresaservice;	
 
 	/************************************** CONSTRUTOR ********************************************/
 	public CadastroEmpresaBean() {		
@@ -43,7 +45,8 @@ public class CadastroEmpresaBean implements Serializable {
 	}
 	
 	public void limpar(){
-		this.empresa = new Empresa();
+		
+		this.empresa 	= 	new Empresa();
 		this.empresa.setEndereco(new Endereco());
 	}
 	

@@ -8,23 +8,16 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.mapping.Array;
 
 import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
 import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
@@ -46,7 +39,7 @@ public class Pessoa implements Serializable {
 	private String docRF;
 	private TipoPessoa tipo;
 	private FisicaJuridica fj;
-	private Endereco endereco;
+	private Endereco endereco = new Endereco();
 
 	/************************************** GETS E SETS ********************************************/
 	@Id
@@ -96,14 +89,16 @@ public class Pessoa implements Serializable {
 		this.fj = fj;
 	}	
 	
-	@Embedded
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "pessoa_endereco", joinColumns = @JoinColumn(name="pessoa_id"),
+			inverseJoinColumns = @JoinColumn(name = "endereco_id"))	
 	public Endereco getEndereco() {
 		return endereco;
 	}
-
+	
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
+	}	
 
 	/************************************** hashCode E equals ********************************************/
 
@@ -114,7 +109,7 @@ public class Pessoa implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -40,7 +40,9 @@ public class EmissaoPedidoService implements Serializable{
 					pedido.getStatus().getDescricao().toUpperCase() +".");
 		}
 		 
-		 this.estoqueService.baixarItensEstoque(pedido);
+		 //this.estoqueService.baixarItensEstoque(pedido);
+		 
+		 this.estoqueService.incrementaQtdTotalProduto(pedido);
 		 
 		 pedido.setStatus(StatusPedido.EMITIDO);
 		 

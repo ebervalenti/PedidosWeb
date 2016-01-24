@@ -52,18 +52,6 @@ INSERT INTO `produto`(`id`,`nome`,`qtd_estoque`,`sku`,`valor_unitario`,`categori
 INSERT INTO `produto`(`id`,`nome`,`qtd_estoque`,`sku`,`valor_unitario`,`categoria_id`)VALUES('4', 'Celular Samsung 2', '440', 'CSS1236', '800.00', '5');
 INSERT INTO `produto`(`id`,`nome`,`qtd_estoque`,`sku`,`valor_unitario`,`categoria_id`)VALUES('5', 'Sofá Bartira', '99', 'SBT1237', '100.00', '5');
 
-INSERT INTO `categoria` (`descricao`) VALUES ('Software');
-INSERT INTO `categoria` (`descricao`) VALUES ('Hardware');
-INSERT INTO `categoria` (`descricao`) VALUES ('Móveis');
-
-
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Computador', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Impressora Fiscal', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Gaveta', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Sia', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('PDV', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Pedidos', '2');
-
 
 
 

@@ -1,17 +1,26 @@
 package br.com.valenti.pedidosweb.model.def;
 
+
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotBlank;
+
+
 
 @Entity
 @Table(name = "empresa")
@@ -27,7 +36,7 @@ public class Empresa implements Serializable {
 	
 	private String razaoSocial;
 	
-	private Endereco endereco;
+	private Endereco endereco = new Endereco();
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -56,15 +65,14 @@ public class Empresa implements Serializable {
 		return razaoSocial;
 	}
 
-	@Embedded
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "empresa_endereco", joinColumns = @JoinColumn(name="empresa_id"),
+			inverseJoinColumns = @JoinColumn(name = "endereco_id"))	
 	public Endereco getEndereco() {
 		return endereco;
 	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
+	
 	/************************************** SETS ********************************************/
 	public void setId(Long id) {
 		this.id = id;
@@ -81,7 +89,17 @@ public class Empresa implements Serializable {
 	public void setRazaoSocial(String razaoSocial) {
 		this.razaoSocial = razaoSocial;
 	}
+	
+	
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+	
+	
+	
 	/************************************** MÉTODOS ********************************************/
+
+
 
 	/************************************** hashCode E equals ********************************************/
 	

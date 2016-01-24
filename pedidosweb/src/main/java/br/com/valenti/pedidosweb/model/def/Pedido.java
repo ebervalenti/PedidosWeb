@@ -15,8 +15,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -52,7 +55,7 @@ public class Pedido implements Serializable {
     private FormaPagamento formaPagamento;   
     private Usuario vendedor;   
     private Pessoa cliente;  
-    private Endereco enderecoEntrega;   
+    private Endereco enderecoEntrega = new Endereco();   
     private List<ItemPedido> itensPedidos = new ArrayList<ItemPedido>();
     private Usuario usuarioLogado;
     private Empresa empresa;
@@ -60,7 +63,7 @@ public class Pedido implements Serializable {
     
     /************************************** GETS E SETS ********************************************/
     @Id
-	@GeneratedValue	
+	@GeneratedValue
     public Long getId() {
         return id;
     }
@@ -171,19 +174,9 @@ public class Pedido implements Serializable {
 
     public void setCliente(Pessoa cliente) {
         this.cliente = cliente;
-    }
-
-    @Embedded
-    public Endereco getEnderecoEntrega() {
-        return enderecoEntrega;
-    }
-
-    public void setEnderecoEntrega(Endereco enderecoEntrega) {
-        this.enderecoEntrega = enderecoEntrega;
-    }
-    
-
-    @NotNull
+    } 
+	
+	@NotNull
     @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
     public List<ItemPedido> getItensPedidos() {
         return itensPedidos;
@@ -215,6 +208,19 @@ public class Pedido implements Serializable {
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
+	
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "entregapedido_endereco", joinColumns = @JoinColumn(name="entregapedido_id"),
+			inverseJoinColumns = @JoinColumn(name = "endereco_id"))	
+	public Endereco getEnderecoEntrega() {
+		return enderecoEntrega;
+	}
+	
+	public void setEnderecoEntrega(Endereco enderecoEntrega) {
+		this.enderecoEntrega = enderecoEntrega;
+	}
+    
 
 	/************************************** MÉTODOS ********************************************/	
 

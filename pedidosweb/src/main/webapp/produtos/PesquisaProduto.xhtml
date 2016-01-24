@@ -24,10 +24,10 @@
             </p:toolbar>
             <!-- Painel da pesquisa-->
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">
-                
+                <!--  
                 <p:outputLabel value="SKU" for="sku"/>
                 <p:inputText id="sku" size="20" value="#{pesquisaProdutoBean.filtro.sku}"/>
-
+				-->
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText id="nome" size="60" value="#{pesquisaProdutoBean.filtro.nome}"/>            
             
@@ -37,10 +37,11 @@
             	style="margin-top: 20px; text-align: center" emptyMessage="Nenhum produto encontrado"  
                 rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
                 
-                <!-- COLUNA SKU /-->
+                <!-- COLUNA SKU /
                 <p:column headerText="SKU" style="text-align: center; width: 100px">
                 	<p:outputLabel value="#{produto.sku}"/>                    
                 </p:column>
+                -->
                  
                  <!-- COLUNA Nome /-->
                 <p:column headerText="Nome" style="text-align: center; width: 100px">

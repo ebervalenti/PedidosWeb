@@ -44,7 +44,7 @@ public class Produto implements Serializable{
     private String nome;
     
 	
-    private String sku;
+    //private String sku; 
     
 	
     private BigDecimal valorUnitario;
@@ -59,7 +59,7 @@ public class Produto implements Serializable{
     
     /************************************** GETS E SETS ********************************************/
     @Id
-	@GeneratedValue
+	@GeneratedValue	
     public Long getId() {
         return id;
     }
@@ -78,17 +78,19 @@ public class Produto implements Serializable{
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+    /* 
     @NotBlank @SKU
 	@Column(nullable = false, length = 20, unique = true)
     public String getSku() {
         return sku;
     }
+    Comentado para adaptar o sistema para a Criare
+    
 
     public void setSku(String sku) {
         this.sku = sku.toUpperCase();
     }
-    
+    */
     @NotNull
     @Column(name="valor_unitario", nullable = false, precision=10, scale=2)
     public BigDecimal getValorUnitario() {
@@ -120,15 +122,17 @@ public class Produto implements Serializable{
         this.categoria = categoria;
     }
     
+    
     @Transient
     public void baixarEstoque(Integer quantidade) {
     	int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
     	if (novaQuantidade < 0) {
 			throw new NegocioException("Quantidade de estoque insuficiente para o produto:  "+
-					this.getSku() +" - "+this.getNome()+".");
+					this.getId() +" - "+this.getNome()+".");
 		}    	
-    	this.setQuantidadeEstoque(novaQuantidade);   	
+    	this.setQuantidadeEstoque(novaQuantidade);  	
     }
+       
     
     @Transient
     public void adicionarEstoque(Integer quantidade) {
