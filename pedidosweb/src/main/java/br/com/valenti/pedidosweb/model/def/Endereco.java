@@ -44,7 +44,6 @@ public class Endereco implements Serializable{
 	}
 
 
-
 	@NotBlank @Size(max = 150)
 	@Column(name = "logradouro", nullable = false, length = 150)
 	public String getLogradouro() {

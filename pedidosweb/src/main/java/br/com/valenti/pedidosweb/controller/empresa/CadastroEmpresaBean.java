@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Endereco;
+import br.com.valenti.pedidosweb.model.def.Estoque;
 import br.com.valenti.pedidosweb.services.CadastroEmpresaService;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
@@ -22,7 +23,9 @@ public class CadastroEmpresaBean implements Serializable {
 	private Empresa empresa;
 	
 	@Inject
-	private CadastroEmpresaService cadastroempresaservice;	
+	private CadastroEmpresaService cadastroempresaservice;
+	
+	private Estoque estoque;
 
 	/************************************** CONSTRUTOR ********************************************/
 	public CadastroEmpresaBean() {		
@@ -48,12 +51,14 @@ public class CadastroEmpresaBean implements Serializable {
 		
 		this.empresa 	= 	new Empresa();
 		this.empresa.setEndereco(new Endereco());
+		this.empresa.setEstoque(new Estoque());
 	}
 	
 	public void salvar(){
 		this.empresa = cadastroempresaservice.salvar(this.empresa);
 		
-		FacesUtil.addInfoMessage("Produto "+ this.empresa.getId()+" - "+this.empresa.getNomeFantasia() +
+		
+		FacesUtil.addInfoMessage("Empresa "+ this.empresa.getId()+" - "+this.empresa.getNomeFantasia() +
 				" salvo com sucesso!");
 		
 		limpar();

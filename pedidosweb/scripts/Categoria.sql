@@ -54,15 +54,13 @@ INSERT INTO `produto`(`id`,`nome`,`qtd_estoque`,`sku`,`valor_unitario`,`categori
 
 INSERT INTO `categoria` (`descricao`) VALUES ('Software');
 INSERT INTO `categoria` (`descricao`) VALUES ('Hardware');
-INSERT INTO `categoria` (`descricao`) VALUES ('Móveis');
-
 
 INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Computador', '2');
 INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Impressora Fiscal', '2');
 INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Gaveta', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Sia', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('PDV', '2');
-INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Pedidos', '2');
+INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Sia', '1');
+INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('PDV', '1');
+INSERT INTO `categoria` (`descricao`, `categoria_pai_id`) VALUES ('Pedidos', '1');
 
 
 
