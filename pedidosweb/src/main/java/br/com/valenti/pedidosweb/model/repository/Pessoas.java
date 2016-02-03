@@ -16,10 +16,12 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Pessoa;
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
+import br.com.valenti.pedidosweb.security.Seguranca;
 
 /**  Criado por: Eber Lasso  **/
 
@@ -29,9 +31,15 @@ public class Pessoas implements Serializable {
 	
 	@Inject
 	private EntityManager manager;
+	
+	private Empresa empresa;
+	
+	@Inject
+	private Seguranca seguranca;
 
 	/************************************** CONSTRUTOR ********************************************/
 
+	
 	
 	/************************************** MÉTODOS ********************************************/	
 	public Pessoa porId(Long id) {
@@ -44,10 +52,15 @@ public class Pessoas implements Serializable {
 		
 		/* Session do hibernate faz pesquisa dinâmica - manager.unwrap(Session.class) - 	
 		desempacota a Session e atribui para a variável session*/
-		Session session = manager.unwrap(Session.class); 
+		Session session = manager.unwrap(Session.class);				 
 		
 		/* A interface Criteria recebe uma sessão do Produto.class para criar o critério*/
-		Criteria criteria = session.createCriteria(Pessoa.class);
+		Criteria criteria = session.createCriteria(Pessoa.class)
+				.createAlias("empresa", "e");
+		
+		if (seguranca.getUsuario().getEmpresa().getId() != 999999) {
+			criteria.add(Restrictions.eq("e.id",seguranca.getUsuario().getEmpresa().getId()));			
+		}
 		
 		if (StringUtils.isNotBlank(filtro.getNome())) {
 			criteria.add(Restrictions.ilike("nome", filtro.getNome(),MatchMode.ANYWHERE));		

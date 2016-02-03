@@ -90,14 +90,17 @@ public class ItemEstoque implements Serializable {
 					this.produto.getId() +" - "+this.produto.getNome()+".");
 		}    	
     	this.setQuantidade(novaQuantidade);  	
-    }
-       
+    }       
     
     @Transient
     public void adicionarEstoque(Integer quantidade) {
     	this.setQuantidade(getQuantidade().add(new BigDecimal(quantidade)));    	
     }  
-
+	
+    @Transient
+    public void retirarEstoque(Integer quantidade) {
+    	this.setQuantidade(getQuantidade().subtract(new BigDecimal(quantidade)));    	
+    }
 	/************************************** hashCode E equals ********************************************/
 	@Override
 	public int hashCode() {
@@ -123,6 +126,7 @@ public class ItemEstoque implements Serializable {
 			return false;
 		return true;
 	}
+
 
 
 }

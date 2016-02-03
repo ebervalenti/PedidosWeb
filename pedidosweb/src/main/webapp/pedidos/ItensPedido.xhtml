@@ -10,7 +10,11 @@
     
    
     <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" rowIndexVar="linha" id="itensTable"
-    paginator="true" rows="10" paginatorAlwaysVisible="true" paginatorPosition="top">      
+    paginator="true" rows="10" paginatorAlwaysVisible="true" paginatorPosition="top">  
+    
+     	<p:column headerText="Código" style="text-align: center; width: 120px">
+        	<h:outputText value="#{item.produto.produto.id}"/>
+       	</p:column>    
         
         <p:column headerText="Produto" style="text-align: center; width: 120px">
         	<h:outputText value="#{item.produto.produto.nome}" rendered="#{item.produtoAssociado}"/>
@@ -52,7 +56,7 @@
             <p:tooltip for="comEstoque" value="Estoque suficiente." rendered="#{item.estoqueSuficiente}"/>     
         </p:column>
         
-        <p:column headerText="Valor total" style="text-align: right; width: 100px">
+        <p:column headerText="Total por produto" style="text-align: right; width: 100px">
             <h:outputText value="#{item.valorTotal}">
             	<f:convertNumber type="currency"/>
             </h:outputText>       

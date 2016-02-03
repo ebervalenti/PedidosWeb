@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import br.com.valenti.pedidosweb.model.def.Pedido;
+import br.com.valenti.pedidosweb.model.enumeration.Operacao;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 import br.com.valenti.pedidosweb.model.repository.Pedidos;
 import br.com.valenti.pedidosweb.util.jpa.Transacional;
@@ -23,6 +24,8 @@ public class EmissaoPedidoService implements Serializable{
 	@Inject
 	private Itens_EstoqueService itensEstoqueService;
 	
+	private Operacao opoeracao;
+	
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -38,18 +41,15 @@ public class EmissaoPedidoService implements Serializable{
 		 if (pedido.isNaoEmissivel()) {
 			throw new NegocioException("Não é possível a emissão de pedido já " + 
 					pedido.getStatus().getDescricao().toUpperCase() +".");
-		}
+		}			 
 		 
-		 //this.estoqueService.baixarItensEstoque(pedido);
-		 
-		 this.itensEstoqueService.incrementaQtdTotalProduto(pedido);
+		 this.itensEstoqueService.atualizaQtdItensEstoque(pedido,opoeracao.ENTRADA );
 		 
 		 pedido.setStatus(StatusPedido.EMITIDO);
 		 
 		 pedido = this.pedidos.guardar(pedido);
 		 
-		 return pedido;
-		
+		 return pedido;		
 	}
 
 	/************************************** hashCode E equals ********************************************/

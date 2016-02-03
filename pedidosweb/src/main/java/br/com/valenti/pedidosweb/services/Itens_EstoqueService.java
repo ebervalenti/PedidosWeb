@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import br.com.valenti.pedidosweb.model.def.ItemEstoque;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
+import br.com.valenti.pedidosweb.model.enumeration.Operacao;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 import br.com.valenti.pedidosweb.model.repository.Itens_Estoque;
 import br.com.valenti.pedidosweb.model.repository.Pedidos;
@@ -23,6 +24,8 @@ public class Itens_EstoqueService implements Serializable{
 	
 	@Inject
 	private Pedidos pedidos;
+	
+	private Operacao entrada_saida;
 	
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -72,18 +75,25 @@ public class Itens_EstoqueService implements Serializable{
 		}	
 	}
 	
-
-	public void retornarItensEstoque(Pedido pedido) {
+	@Transacional
+	public void atualizaQtdItensEstoque(Pedido pedido, Operacao es ) {
 		pedido = this.pedidos.porId(pedido.getId());
 		
-		for (ItemPedido item : pedido.getItensPedidos()) {
-			item.getProduto().adicionarEstoque(item.getQuantidade());
-		}	
+		if (entrada_saida.ENTRADA.equals(es)) {
+			for (ItemPedido item : pedido.getItensPedidos()) {
+				item.getProduto().adicionarEstoque(item.getQuantidade());
+			}			
+		}
+		
+		if (entrada_saida.SAIDA.equals(es)) {
+			for (ItemPedido item : pedido.getItensPedidos()) {
+				item.getProduto().retirarEstoque(item.getQuantidade());
+			}			
+		}		
+		
 	}
 
-	public void incrementaQtdTotalProduto(Pedido pedido) {		
-		retornarItensEstoque(pedido);
-	}
+	
 	
 	/************************************** hashCode E equals ********************************************/
 

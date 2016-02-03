@@ -29,8 +29,7 @@ public class PesquisaPedidosBean implements Serializable {
 	Pedidos pedidos;
 	
 	@Inject
-	private Seguranca seguranca;
-		
+	private Seguranca seguranca;		
 
 	/************************************** CONSTRUTOR ********************************************/
 	public PesquisaPedidosBean() {		

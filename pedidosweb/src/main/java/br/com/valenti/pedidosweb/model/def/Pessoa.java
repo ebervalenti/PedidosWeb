@@ -16,8 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
 import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
@@ -40,6 +42,8 @@ public class Pessoa implements Serializable {
 	private TipoPessoa tipo;
 	private FisicaJuridica fj;
 	private Endereco endereco = new Endereco();
+	private Empresa empresa;
+	
 
 	/************************************** GETS E SETS ********************************************/
 	@Id
@@ -99,6 +103,18 @@ public class Pessoa implements Serializable {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}	
+	
+	
+	@NotNull
+    @ManyToOne
+    @JoinColumn(name = "empresa_id", nullable = false)
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+	
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	/************************************** hashCode E equals ********************************************/
 

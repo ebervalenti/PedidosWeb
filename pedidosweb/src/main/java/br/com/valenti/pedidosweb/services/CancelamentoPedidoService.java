@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.inject.Inject;
 
 import br.com.valenti.pedidosweb.model.def.Pedido;
+import br.com.valenti.pedidosweb.model.enumeration.Operacao;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 import br.com.valenti.pedidosweb.model.repository.Pedidos;
 import br.com.valenti.pedidosweb.util.jpa.Transacional;
@@ -19,6 +20,8 @@ public class CancelamentoPedidoService implements Serializable {
 	
 	@Inject
 	private Itens_EstoqueService itensEstoqueService;
+	
+	private Operacao opoeracao;
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -37,7 +40,7 @@ public class CancelamentoPedidoService implements Serializable {
 		}
 		
 		if (pedido.isEmitido()) {
-			this.itensEstoqueService.incrementaQtdTotalProduto(pedido);
+			this.itensEstoqueService.atualizaQtdItensEstoque(pedido, opoeracao.SAIDA);
 		}
 		
 		pedido.setStatus(StatusPedido.CANCELAD0);

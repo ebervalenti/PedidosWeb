@@ -45,33 +45,33 @@
                  
                  <!-- COLUNA Nome /-->
                 <p:column headerText="Nome" style="text-align: center; width: 100px">
-                 	<p:outputLabel value="#{produto.nome}"/>     	   
+                 	<p:outputLabel value="#{produto.produto.nome}"/>     	   
                 </p:column>
                 
                 <!-- COLUNA Categoria /-->
                 <p:column headerText="Categoria" style="text-align: center; width: 250px">
-                	<p:outputLabel value="#{produto.categoria.categoriaPai.descricao}"/>      
+                	<p:outputLabel value="#{produto.produto.categoria.categoriaPai.descricao}"/>      
                 </p:column>
                 
                 <!-- COLUNA Categoria /-->
                 <p:column headerText="SubCategoria" style="text-align: center; width: 250px">
-                	<p:outputLabel value="#{produto.categoria.descricao}"/>      
+                	<p:outputLabel value="#{produto.produto.categoria.descricao}"/>      
                 </p:column>
                 
                 <!-- COLUNA Valor Unitário /-->
                 <p:column headerText="Valor Unitário" style="text-align: center; width: 120px">
-                 	<p:outputLabel value="#{produto.valorUnitario}"/>   
+                 	<p:outputLabel value="#{produto.produto.valorUnitario}"/>   
                 </p:column>
                 <!-- COLUNA Valor Estoque /-->
                 <p:column headerText="Estoque" style="text-align: center; width: 98px">
-             		<p:outputLabel value="#{produto.quantidadeEstoque}"/>  
+             		<p:outputLabel value="#{produto.quantidade}"/>  
                 </p:column>
                 <!-- COLUNA de edição do produto caneta e lixo /-->
                 <p:column headerText="Editar / Exluir" style="width: 100px; text-align: center">
 	    			
 	    			<!-- botão de editar -->
 	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="produto" value="#{produto.id}" />
+	    				<f:param name="produto" value="#{produto.produto.id}" />
 	    			</p:button>
 	    			
 	    			<!-- botão de excluir -->
@@ -84,7 +84,7 @@
             
             <!-- mensagem de confirmação de exclusão -->
             <p:confirmDialog header="Exclusão de produto" message="Realmente deseja excluir o produto 
-            	#{pesquisaProdutoBean.produtoSelecionado.sku} - #{pesquisaProdutoBean.produtoSelecionado.nome}?" 
+            	#{pesquisaProdutoBean.produtoSelecionado.produto.id} - #{pesquisaProdutoBean.produtoSelecionado.produto.nome}?" 
             		widgetVar="confirmaExclusao" id="confirmaExclisaoDialog">
                 <p:button value="Não" onclick="confirmaExclusao.hide(); return false;" /> 
                 <p:commandButton value="Sim" oncomplete="confirmaExclusao.hide();" action="#{pesquisaProdutoBean.excluir}"

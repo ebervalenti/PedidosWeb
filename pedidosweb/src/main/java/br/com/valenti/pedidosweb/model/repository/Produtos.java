@@ -40,10 +40,7 @@ public class Produtos implements Serializable {
 	@Inject
 	private Itens_Estoque addItemEstoque;
 	
-	private ItemEstoque item = new ItemEstoque();
-	
-	
-	
+	private ItemEstoque item = new ItemEstoque();	
 
 	/************************************** CONSTRUTOR ********************************************/
 

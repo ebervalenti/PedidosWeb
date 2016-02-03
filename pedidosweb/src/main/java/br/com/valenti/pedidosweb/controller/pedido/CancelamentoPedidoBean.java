@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.services.CancelamentoPedidoService;
+import br.com.valenti.pedidosweb.util.jpa.Transacional;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
 @Named
@@ -36,6 +37,7 @@ public class CancelamentoPedidoBean implements Serializable {
 	/************************************** SETS ********************************************/
 
 	/************************************** MÉTODOS ********************************************/
+	@Transacional
 	public  void cancelarPedido(){
 		this.pedido = this.cancelamentoPedioService.cancelar(pedido);
 		this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(pedido));
