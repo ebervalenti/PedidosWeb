@@ -46,14 +46,13 @@ public class ItemEstoque implements Serializable {
 	}
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinTable(name = "item_estoque_produto", joinColumns = @JoinColumn(name="item_estoque_id"),
-			inverseJoinColumns = @JoinColumn(name = "produto_id"))	
+	@JoinColumn(name="produto_id", nullable=false)
 	public Produto getProduto() {
 		return produto;
 	}
 	
-	@NotNull
-    @ManyToOne
+	
+    @OneToOne
     @JoinColumn(name="estoque_id", nullable=false)
 	public Estoque getEstoque() {
 		return estoque;

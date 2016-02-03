@@ -4,6 +4,7 @@
 package br.com.valenti.pedidosweb.model.repository;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.faces.context.FacesContext;
@@ -20,6 +21,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import br.com.valenti.pedidosweb.model.def.ItemEstoque;
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
 import br.com.valenti.pedidosweb.services.NegocioException;
@@ -34,6 +36,11 @@ public class Produtos implements Serializable {
 	
 	@Inject
 	private EntityManager manager;
+	
+	@Inject
+	private Itens_Estoque addItemEstoque;
+	
+	private ItemEstoque item = new ItemEstoque();
 	
 	
 	

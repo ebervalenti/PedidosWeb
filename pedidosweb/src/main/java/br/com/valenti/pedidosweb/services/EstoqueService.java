@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.inject.Inject;
+import javax.persistence.Transient;
 
+import br.com.valenti.pedidosweb.model.def.ItemEstoque;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.repository.Pedidos;

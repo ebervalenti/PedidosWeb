@@ -12,7 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -31,6 +34,8 @@ public class Estoque implements Serializable {
 	private BigDecimal valorestoque = BigDecimal.ZERO; 
 	
 	private List<ItemEstoque> itenstoque = new ArrayList<ItemEstoque>();	
+	
+	//private Empresa empresa;
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -44,14 +49,12 @@ public class Estoque implements Serializable {
 	@Column(nullable = false, length = 100)
 	public BigDecimal getValorestoque() {
 		return valorestoque;
-	}	
+	}
 	
-	@NotNull
     @OneToMany(mappedBy="estoque", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
 	public List<ItemEstoque> getItenstoque() {
 		return itenstoque;
-	}
-
+	} 
 	/************************************** SETS ********************************************/
 
 	public void setId(Long id) {
@@ -65,9 +68,9 @@ public class Estoque implements Serializable {
 	public void setItenstoque(List<ItemEstoque> itenstoque) {
 		this.itenstoque = itenstoque;
 	}	
-
 	/************************************** MÉTODOS ********************************************/
 	
+
 
 
 

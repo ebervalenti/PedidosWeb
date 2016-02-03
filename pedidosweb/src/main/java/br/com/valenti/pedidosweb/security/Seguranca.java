@@ -8,6 +8,8 @@ import javax.inject.Named;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import br.com.valenti.pedidosweb.model.def.Empresa;
+import br.com.valenti.pedidosweb.model.def.Estoque;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 
 @Named
@@ -16,12 +18,13 @@ public class Seguranca {
 	/************************************** PROPRIEDADES ********************************************/
 	 @Inject
 	 private ExternalContext externalcontext;
+	 
 	/************************************** CONSTRUTOR ********************************************/
 
 	/************************************** GETS ********************************************/
-
+	
 	/************************************** SETS ********************************************/
-
+	 
 	/************************************** MÉTODOS ********************************************/
 	public Usuario getUsuario() {
 		Usuario usuario = null;
@@ -30,10 +33,10 @@ public class Seguranca {
 		
 		if (usuarioLogado != null) {
 			usuario = usuarioLogado.getUsuario();
-		}
-		
+		}		
 		return usuario;
 	}
+
 
 	private UsuarioSistema getUsuarioLogado() {
 		UsuarioSistema usuario = null;
@@ -43,10 +46,12 @@ public class Seguranca {
 		
 		if (auth != null && auth.getPrincipal() != null) {
 			usuario = (UsuarioSistema) auth.getPrincipal();
-		}
-		
-		return usuario;
+		}		
+		return usuario;	
 	}
+	
+	
+	
 	
 	//HABILITA OU DESABILITA OS BOTÕES DE ACORDO COM O GRUPO DE USUÁRIO
 	public boolean isEmitirPedido_Permitido(){
@@ -69,6 +74,8 @@ public class Seguranca {
 					externalcontext.isUserInRole("MASTER");
 			
 		}
+		
+		
 
 	/************************************** hashCode E equals ********************************************/
 

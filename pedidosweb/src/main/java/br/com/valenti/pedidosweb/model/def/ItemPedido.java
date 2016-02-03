@@ -93,12 +93,12 @@ public class ItemPedido implements Serializable{
         this.pedido = pedido;
     }
     
-    @Transient
-    public BigDecimal getValorTotal() {	
-		return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));		
-	}
     
     /************************************** MÉTODOS ********************************************/	
+    @Transient
+    public BigDecimal getValorTotal() {	
+    	return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));		
+    }
     
     @Transient
 	public boolean isProdutoAssociado() {

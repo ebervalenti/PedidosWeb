@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,94 +37,90 @@ import br.com.valenti.pedidosweb.validation.SKU;
 @Table(name="produto")
 public class Produto implements Serializable{
 	/************************************** PROPRIEDADES ********************************************/	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
 	
+    private Long id;    
 	
-    private Long id;
-    
+    private String nome;    
 	
-    private String nome;
-    
+    //private String sku;     
 	
-    //private String sku; 
+    private BigDecimal valorUnitario;    
     
-	
-    private BigDecimal valorUnitario;
+    private Integer quantidadeEstoque;   
     
-    
-    private Integer quantidadeEstoque;
-    
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
     
-    /************************************** GETS E SETS ********************************************/
+    private Estoque estoque;
+    
+    /************************************** GETS ********************************************/
     @Id
-	@GeneratedValue	
+    @GeneratedValue	
     public Long getId() {
-        return id;
+    	return id;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
     
     @NotBlank
-	@Size(max = 80)
-	@Column(nullable = false, length = 80)
+    @Size(max = 80)
+    @Column(nullable = false, length = 80)
     public String getNome() {
-        return nome;
+    	return nome;
     }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    /* 
-    @NotBlank @SKU
-	@Column(nullable = false, length = 20, unique = true)
-    public String getSku() {
-        return sku;
-    }
-    Comentado para adaptar o sistema para a Criare
     
-
-    public void setSku(String sku) {
-        this.sku = sku.toUpperCase();
-    }
-    */
     @NotNull
     @Column(name="valor_unitario", nullable = false, precision=10, scale=2)
     public BigDecimal getValorUnitario() {
-        return valorUnitario;
+    	return valorUnitario;
     }
-
-    public void setValorUnitario(BigDecimal valorUnitario) {
-        this.valorUnitario = valorUnitario;
-    }
+    
     
     @NotNull @Min(0)
     @Column(name="qtd_estoque", nullable=false,length=5)
     public Integer getQuantidadeEstoque() {
-        return quantidadeEstoque;
+    	return quantidadeEstoque;
     }   
     
-    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
-
+    
     @NotNull
-	@ManyToOne
-	@JoinColumn(name = "categoria_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
     public Categoria getCategoria() {
-        return categoria;
+    	return categoria;
+    }   
+    
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "estoque_id", nullable = false)
+    public Estoque getEstoque() {
+    	return estoque;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+	/************************************** SETS ********************************************/
+    
+    public void setEstoque(Estoque estoque) {
+    	this.estoque = estoque;
     }
     
+    public void setValorUnitario(BigDecimal valorUnitario) {
+    	this.valorUnitario = valorUnitario;
+    }    
     
+    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+    	this.quantidadeEstoque = quantidadeEstoque;
+    }
+    public void setCategoria(Categoria categoria) {
+    	this.categoria = categoria;
+    }
+    
+    public void setNome(String nome) {
+    	this.nome = nome;
+    }
+    
+    public void setId(Long id) {
+    	this.id = id;
+    }
+    /************************************** MÉTODOS ********************************************/
     @Transient
     public void baixarEstoque(Integer quantidade) {
     	int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
@@ -137,7 +135,8 @@ public class Produto implements Serializable{
     @Transient
     public void adicionarEstoque(Integer quantidade) {
     	this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);    	
-    }
+    }  
+    
     /************************************** hashCode E equals ********************************************/
 
     @Override
@@ -161,6 +160,4 @@ public class Produto implements Serializable{
         }
         return true;
     }
-
-
 }

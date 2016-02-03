@@ -28,14 +28,7 @@ public class CadastroProdutoService implements Serializable {
 	/************************************** MÉTODOS ********************************************/
 	@Transacional /* interceptador para criar a transação - se este método executar sem erros 
 	 					essa anotação fará o commit se não fará o rollback */ 
-	public Produto salvar(Produto produto){
-		 Produto produtoExistente = produtos.porId(produto.getId());
-		 
-		 if (produtoExistente != null && !produtoExistente.equals(produto)){
-			 
-			 throw new NegocioException("Já existe um produto com o SKU informado!");
-			
-		}
+	public Produto salvar(Produto produto){	
 		return produtos.guardar(produto);
 		 
 	 }

@@ -18,6 +18,10 @@ INSERT INTO `usuario`(`id`,`email`,`nome`,`senha`,`username`,`empresa_id`) VALUE
 UPDATE `usuario` SET `senha`='202cb962ac59075b964b07152d234b70' WHERE `id`='1';
 UPDATE `usuario` SET `senha`='202cb962ac59075b964b07152d234b70' WHERE `id`='3';
 
+INSERT INTO `valentidb`.`usuario_grupo` (`usuario_id`, `grupo_id`) VALUES ('1', '1');
+INSERT INTO `valentidb`.`usuario_grupo` (`usuario_id`, `grupo_id`) VALUES ('2', '2');
+INSERT INTO `valentidb`.`usuario_grupo` (`usuario_id`, `grupo_id`) VALUES ('3', '3');
+INSERT INTO `valentidb`.`usuario_grupo` (`usuario_id`, `grupo_id`) VALUES ('999999', '999999');
 
 INSERT INTO `categoria` (`descricao`) VALUES ('Software');
 INSERT INTO `categoria` (`descricao`) VALUES ('Hardware');
