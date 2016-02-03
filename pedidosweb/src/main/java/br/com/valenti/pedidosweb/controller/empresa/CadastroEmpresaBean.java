@@ -1,7 +1,5 @@
 package br.com.valenti.pedidosweb.controller.empresa;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.io.Serializable;
 
 import javax.faces.bean.ViewScoped;
@@ -11,9 +9,7 @@ import javax.inject.Named;
 import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Endereco;
 import br.com.valenti.pedidosweb.model.def.Estoque;
-import br.com.valenti.pedidosweb.security.Seguranca;
 import br.com.valenti.pedidosweb.services.CadastroEmpresaService;
-import br.com.valenti.pedidosweb.services.EstoqueService;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
 @Named
@@ -25,10 +21,7 @@ public class CadastroEmpresaBean implements Serializable {
 	private Empresa empresa;
 	
 	@Inject
-	private CadastroEmpresaService cadastroempresaservice;
-	
-	@Inject
-	private EstoqueService estoqueservice;
+	private CadastroEmpresaService cadastroempresaservice;	
 	
 	private Estoque estoque; 
 	/************************************** CONSTRUTOR ********************************************/

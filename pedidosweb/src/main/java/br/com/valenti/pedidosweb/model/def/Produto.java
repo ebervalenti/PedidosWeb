@@ -121,6 +121,7 @@ public class Produto implements Serializable{
     	this.id = id;
     }
     /************************************** MÉTODOS ********************************************/
+   /*
     @Transient
     public void baixarEstoque(Integer quantidade) {
     	int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
@@ -136,6 +137,7 @@ public class Produto implements Serializable{
     public void adicionarEstoque(Integer quantidade) {
     	this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);    	
     }  
+    */
     
     /************************************** hashCode E equals ********************************************/
 

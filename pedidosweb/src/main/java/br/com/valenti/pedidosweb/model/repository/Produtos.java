@@ -56,10 +56,8 @@ public class Produtos implements Serializable {
 
 	
 	public Produto porSku(String sku) {
-		String qlString = "from Produto where upper(sku) = :sku"; 
-		
-		try {
-			
+		String qlString = "from Produto where upper(sku) = :sku"; 		
+		try {			
 			return manager.createQuery(qlString, Produto.class)
 					.setParameter("sku",sku.toUpperCase())
 					.getSingleResult();
@@ -70,6 +68,8 @@ public class Produtos implements Serializable {
 		}
 	}
 	
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Produto> pesquisar(ProdutoFilter pesquisa) {
 		/* Session do hibernate faz pesquisa dinâmica - manager.unwrap(Session.class) - 	
@@ -77,11 +77,7 @@ public class Produtos implements Serializable {
 		Session session = manager.unwrap(Session.class); 
 		
 		/* A interface Criteria recebe uma sessão do Produto.class para criar o critério*/
-		Criteria criteria = session.createCriteria(Produto.class);
-		
-		if (StringUtils.isNotBlank(pesquisa.getSku())) {
-			criteria.add(Restrictions.eq("sku", pesquisa.getSku()));			
-		}
+		Criteria criteria = session.createCriteria(Produto.class);		
 		
 		if (StringUtils.isNotBlank(pesquisa.getNome())) {
 			criteria.add(Restrictions.ilike("nome", pesquisa.getNome(),MatchMode.ANYWHERE));		

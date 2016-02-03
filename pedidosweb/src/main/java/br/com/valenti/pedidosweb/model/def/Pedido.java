@@ -258,10 +258,11 @@ public class Pedido implements Serializable {
     //primeiro produto da lista de todos os itens
     public void adicionarItemVazio() {
     	if (this.isOrcamento()) {	
-		Produto produto = new Produto();
+		ItemEstoque produto = new ItemEstoque();
+		produto.setProduto(new Produto());
 				
-		ItemPedido item = new ItemPedido();		
-		item.setProduto(produto);
+		ItemPedido item = new ItemPedido();	
+		item.setProduto(produto);		
 		item.setPedido(this);
 		
 		this.getItensPedidos().add(0,item);	

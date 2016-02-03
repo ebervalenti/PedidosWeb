@@ -13,7 +13,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import br.com.valenti.pedidosweb.services.NegocioException;
 
 @Entity
 @Table(name = "item_estoque")
@@ -24,7 +27,7 @@ public class ItemEstoque implements Serializable {
 	
 	private Long id;
 	
-	private BigDecimal quantidade = BigDecimal.ZERO;
+	private BigDecimal quantidade;
 	
 	private Produto produto;
 	
@@ -79,6 +82,21 @@ public class ItemEstoque implements Serializable {
 	
 	/************************************** MÉTODOS ********************************************/
 
+	@Transient
+    public void baixarEstoque(Integer quantidade) {
+    	BigDecimal novaQuantidade = this.getQuantidade().subtract(new BigDecimal(quantidade));
+    	if (novaQuantidade.compareTo(new BigDecimal(0)) < 0) {
+			throw new NegocioException("Quantidade de estoque insuficiente para o produto:  "+
+					this.produto.getId() +" - "+this.produto.getNome()+".");
+		}    	
+    	this.setQuantidade(novaQuantidade);  	
+    }
+       
+    
+    @Transient
+    public void adicionarEstoque(Integer quantidade) {
+    	this.setQuantidade(getQuantidade().add(new BigDecimal(quantidade)));    	
+    }  
 
 	/************************************** hashCode E equals ********************************************/
 	@Override

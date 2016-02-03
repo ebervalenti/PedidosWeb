@@ -15,19 +15,23 @@ import org.apache.commons.lang3.StringUtils;
 import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
 import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Endereco;
+import br.com.valenti.pedidosweb.model.def.ItemEstoque;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
 import br.com.valenti.pedidosweb.model.def.Pessoa;
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
+import br.com.valenti.pedidosweb.model.repository.Itens_Estoque;
 import br.com.valenti.pedidosweb.model.repository.Pessoas;
 import br.com.valenti.pedidosweb.model.repository.Produtos;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
+import br.com.valenti.pedidosweb.model.repository.filter.Itemestoquefilter;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
 import br.com.valenti.pedidosweb.security.Seguranca;
 import br.com.valenti.pedidosweb.services.CadastroPedidoService;
+import br.com.valenti.pedidosweb.services.Itens_EstoqueService;
 import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 import br.com.valenti.pedidosweb.validation.SKU;
@@ -55,17 +59,27 @@ public class CadastroPedidoBean implements Serializable{
     
     private PessoaFilter cliente = new PessoaFilter();
 	
-    @Inject
-    private CadastroPedidoService cadastroPedidoService;
-    
-    private Produto produtoLinhaEditavel;
+    //@Inject
+    //private CadastroPedidoService cadastroPedidoService;
     
     @Inject
-    private Produtos produtos; //repository
+    private Itens_EstoqueService cadastroPedidoService;
     
-    private ProdutoFilter produtoFiltro = new ProdutoFilter();
+   // private Produto produtoLinhaEditavel;
     
-    private String sku;
+    private ItemEstoque produtoLinhaEditavel;
+    
+    //@Inject
+    //private Produtos produtos; //repository
+    
+    @Inject
+    private Itens_Estoque produtos; //repository
+    
+    //private ProdutoFilter produtoFiltro = new ProdutoFilter();
+    
+    private Itemestoquefilter produtoFiltro = new Itemestoquefilter();
+    
+   // private String sku;
     
     @Inject
     private Seguranca seguranca;
@@ -78,23 +92,17 @@ public class CadastroPedidoBean implements Serializable{
 		limpar();	
 	}
 	
-	/************************************** GETS E SETS ********************************************/		
+	/************************************** GETS  ********************************************/		
 	public Pedido getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
-	}	
 
 	public List<Usuario> getVendedores() {
 		return vendedores;
 	}
 
-	public void setVendedores(List<Usuario> vendedores) {
-		this.vendedores = vendedores;
-	}	
-
+/*
 	public Produto getProdutoLinhaEditavel() {
 		return produtoLinhaEditavel;
 	}
@@ -110,7 +118,7 @@ public class CadastroPedidoBean implements Serializable{
 	public void setProdutoFiltro(ProdutoFilter produtoFiltro) {
 		this.produtoFiltro = produtoFiltro;
 	}	
-/*
+
 	@SKU
 	public String getSku() {
 		return sku;
@@ -121,8 +129,41 @@ public class CadastroPedidoBean implements Serializable{
 	}
 	*/
 	
+	public ItemEstoque getProdutoLinhaEditavel() {
+		return produtoLinhaEditavel;
+	}
+
+	public Itens_Estoque getProdutos() {
+		return produtos;
+	}
+
+	public Itemestoquefilter getProdutoFiltro() {
+		return produtoFiltro;
+	}
+	
+
+	/**************************************  SETS ********************************************/	
+	
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}	
 	
 	
+	public void setVendedores(List<Usuario> vendedores) {
+		this.vendedores = vendedores;
+	}	
+	
+	public void setProdutoLinhaEditavel(ItemEstoque produtoLinhaEditavel) {
+		this.produtoLinhaEditavel = produtoLinhaEditavel;
+	}
+
+	public void setProdutos(Itens_Estoque produtos) {
+		this.produtos = produtos;
+	}
+
+	public void setProdutoFiltro(Itemestoquefilter produtoFiltro) {
+		this.produtoFiltro = produtoFiltro;
+	}	
 	
 
 	/************************************** MÉTODOS ********************************************/	
@@ -134,8 +175,8 @@ public class CadastroPedidoBean implements Serializable{
 		try {			
 			this.pedido.setEmpresa(seguranca.getUsuario().getEmpresa());
 			this.pedido.setUsuarioLogado(seguranca.getUsuario());			
-			this.pedido = this.cadastroPedidoService.salvar(this.pedido);	
-			FacesUtil.addInfoMessage("Pedido salvo com sucesso!.");
+			this.pedido = this.cadastroPedidoService.guardarPedido(this.pedido);	
+			FacesUtil.addInfoMessage("Pedido no. "+ this.pedido.getId() + ". Salvo com sucesso!.");
 		} finally {
 			this.pedido.adicionarItemVazio();
 		}					
@@ -179,27 +220,27 @@ public class CadastroPedidoBean implements Serializable{
 		return this.pedido.getId()!= null; 	
 	}
 	
-	public List<Produto> completarProduto(String nome){	
-		this.produtoFiltro.setNome(nome);
+	public List<ItemEstoque> completarProduto(String nome){			
+		this.produtoFiltro.setNome(nome);		
 		return this.produtos.pesquisar(produtoFiltro);
 		
 	}
 	
 	public void carregarProdutoLinhaEditavel(){
-		ItemPedido item = this.pedido.getItensPedidos() .get(0);	
+		ItemPedido item = this.pedido.getItensPedidos().get(0);	
 		
-		if (this.produtoLinhaEditavel != null) {
+		if (this.produtoLinhaEditavel.getProduto() != null) {
 			if (this.existeItemComProduto(this.produtoLinhaEditavel)) {
 				FacesUtil.addErrorMessage("Jé existe um item com o produto informado.");
 				this.produtoLinhaEditavel = null;
 			}		
-			else{			
+			else{	
 				item.setProduto(this.produtoLinhaEditavel);
-				item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
+				item.getProduto().setProduto(this.produtoLinhaEditavel.getProduto());
+				item.setValorUnitario(this.produtoLinhaEditavel.getProduto().getValorUnitario());
 				
 				this.pedido.adicionarItemVazio();
-				this.produtoLinhaEditavel = null;
-				this.sku = null;
+				this.produtoLinhaEditavel = null;		
 				
 				
 				this.pedido.recalcularValorTotal();		
@@ -207,24 +248,17 @@ public class CadastroPedidoBean implements Serializable{
 		}
 	}
 	
-	private boolean existeItemComProduto(Produto produtoLinhaEditavel2) {
+	private boolean existeItemComProduto(ItemEstoque produtoLinhaEditavel2) {
 		boolean existeItem = false;
 		
 		for (ItemPedido item : this.getPedido().getItensPedidos()) {
-			if (produtoLinhaEditavel2.equals(item.getProduto())) {
+			if (produtoLinhaEditavel2.getProduto().equals(item.getProduto().getProduto())) {
 				existeItem = true;
 				break;
 			}			
 		}
 		return existeItem;
-	}
-
-	public void carregarProdutoPorSku(){
-		if (StringUtils.isNotEmpty(this.sku)) {
-			this.produtoLinhaEditavel = this.produtos.porSku(this.sku);			
-			this.carregarProdutoLinhaEditavel();			
-		}		
-	}
+	}	
 	
 	public void atualizarQuantidade(ItemPedido item, int linha){
 		if (item.getQuantidade() < 1) {

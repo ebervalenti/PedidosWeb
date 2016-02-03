@@ -21,7 +21,7 @@ public class EmissaoPedidoService implements Serializable{
 	private Pedidos pedidos;
 	
 	@Inject
-	private EstoqueService estoqueService;
+	private Itens_EstoqueService itensEstoqueService;
 	
 
 	/************************************** CONSTRUTOR ********************************************/
@@ -42,7 +42,7 @@ public class EmissaoPedidoService implements Serializable{
 		 
 		 //this.estoqueService.baixarItensEstoque(pedido);
 		 
-		 this.estoqueService.incrementaQtdTotalProduto(pedido);
+		 this.itensEstoqueService.incrementaQtdTotalProduto(pedido);
 		 
 		 pedido.setStatus(StatusPedido.EMITIDO);
 		 

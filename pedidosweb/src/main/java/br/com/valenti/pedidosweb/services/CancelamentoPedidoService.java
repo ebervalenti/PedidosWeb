@@ -18,7 +18,7 @@ public class CancelamentoPedidoService implements Serializable {
 	private Pedidos pedidos;
 	
 	@Inject
-	private EstoqueService estoqueService;
+	private Itens_EstoqueService itensEstoqueService;
 
 	/************************************** CONSTRUTOR ********************************************/
 
@@ -37,7 +37,7 @@ public class CancelamentoPedidoService implements Serializable {
 		}
 		
 		if (pedido.isEmitido()) {
-			this.estoqueService.incrementaQtdTotalProduto(pedido);
+			this.itensEstoqueService.incrementaQtdTotalProduto(pedido);
 		}
 		
 		pedido.setStatus(StatusPedido.CANCELAD0);

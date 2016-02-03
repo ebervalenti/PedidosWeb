@@ -39,7 +39,7 @@ public class ItemPedido implements Serializable{
     private BigDecimal valorUnitario = BigDecimal.ZERO;
     
 	
-	private Produto produto;
+	private ItemEstoque produto;
     
 	
 	private Pedido pedido;
@@ -75,15 +75,15 @@ public class ItemPedido implements Serializable{
 
     @ManyToOne
 	@JoinColumn(name="produto_id",nullable=false)
-    public Produto getProduto() {
-        return produto;
-    }
+    public ItemEstoque getProduto() {
+    	return produto;
+    }   
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
+	public void setProduto(ItemEstoque produto) {
+		this.produto = produto;
+	}
 
-    @ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "pedido_id", nullable=false)
     public Pedido getPedido() {
         return pedido;
@@ -102,14 +102,16 @@ public class ItemPedido implements Serializable{
     
     @Transient
 	public boolean isProdutoAssociado() {
-		return this.getProduto() != null && this.getProduto().getId() != null;
+		return this.getProduto().getProduto() != null && this.getProduto().getProduto().getId() != null;
 	}
     
     @Transient
     public boolean isEstoqueSuficiente(){    	
-		return this.getPedido().isEmitido() || 
-				this.getProduto().getId() == null ||
-				((this.getProduto().getQuantidadeEstoque() >= this.getQuantidade()));
+		return (this.getPedido().isEmitido()) || 
+				(produto.getProduto().getId() == null) ||				
+				((produto.getQuantidade().compareTo(new BigDecimal(this.quantidade))>=0)
+				
+		);
     }
     
     @Transient
