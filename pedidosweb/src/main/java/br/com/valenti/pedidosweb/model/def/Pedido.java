@@ -328,6 +328,12 @@ public class Pedido implements Serializable {
 	private boolean isAlteravel() {		
 		return StatusPedido.ORCAMENTO.equals(this.getStatus());
 	}
+    
+    @Transient
+    public boolean isNaoEnviavelPorEmail(){
+		return this.isNovo() || this.isCancelado();
+    	
+    }   
 
 	/************************************** hashCode E equals ********************************************/
     @Override

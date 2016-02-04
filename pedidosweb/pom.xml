@@ -59,34 +59,10 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>3.5</version>
+            <version>4.0</version>
             <scope>compile</scope>
         </dependency>
-        
-        <!-- Mojarra (implementacao do JSF) -->
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>javax.faces</artifactId>
-            <version>2.1.21</version>
-            <scope>compile</scope>
-        </dependency>        
-		
-		
-		<!-- Log4J -->    	
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
-			<scope>compile</scope>
-		</dependency>
-		
-		<!-- Commons Logging (abstrai a implementação de logging) -->
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.3</version>
-			<scope>compile</scope>
-		</dependency>
+			
 		
 		<!-- Spring Security (autenticação e autorização) -->
 		<dependency>
@@ -103,14 +79,16 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>3.1.4.RELEASE</version>
-		</dependency>
+		</dependency>	
 		
-		<!-- Apache Commons Lang (utilidades)  -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
-		</dependency>
+		
+		<!-- Mojarra (implementacao do JSF) -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.1.21</version>
+            <scope>compile</scope>
+        </dependency> 	
 		
 		<!-- OmniFaces (utilitarios para JSF) -->
 		<dependency>
@@ -120,13 +98,72 @@
 		    <scope>compile</scope>
 		</dependency>
 		
+		<!-- Log4J -->    	
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+			<scope>compile</scope>
+		</dependency>	
+		
+		<!-- Commons Logging (abstrai a implementação de logging) -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.3</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<!-- Apache Commons Lang (utilidades)  -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		 <!-- Abstração para envio de e-mails -->		
+		
+		
+		<!-- Requerido para envio de e-mails -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.4</version>
+			<scope>compile</scope>
+		</dependency>  
+		
 		<!-- API de Servlet -->
 		<dependency>
 	        <groupId>javax.servlet</groupId>
 	        <artifactId>javax.servlet-api</artifactId>
 	        <version>3.0.1</version>
 	        <scope>provided</scope>
-		</dependency>  
+		</dependency>
+		
+		<!-- Abstrai o envio de email -->
+		<dependency>
+			<groupId>com.outjected</groupId>
+			<artifactId>simple-email</artifactId>
+			<version>0.2.1</version>
+			<scope>compile</scope>			
+		</dependency>
+		
+		<!-- Cria o template do corpo do email -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		
+		<!-- Formata os números no corpo do template -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
+		</dependency>
+		
+		
     </dependencies>     
 
     <build>
@@ -142,6 +179,7 @@
             </plugin>
         </plugins>
     </build>
+    
 
     <repositories>
         <repository>
@@ -151,5 +189,5 @@
             <layout>default</layout>
         </repository>
     </repositories>
-
+    
 </project>
