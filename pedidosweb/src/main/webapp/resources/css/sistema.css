@@ -6,25 +6,26 @@
 
 body{
     font-size: 12px;
-    font-family: Arial;//Segoi UI; 
+    font-family: sans-serif; 
     margin: 0px;
     font-weight: normal;
 }
 
 header{
-    padding: 5px 0px;
-    margin-bottom: 20px;
-    height: 30px;
-    
-    background-color: #1E1E1E;
-    color: #fff;
-   
-    box-shadow: 0px 12px 12px #ccc;
+color: #283841;
+text-decoration: none;
+border-bottom: 0px #0B4881 solid;
+padding: 0 0 0px;    
+background-color: #0B4881;
+color: #fff;
+margin-left: 155px;
+
+box-shadow: 0px 12px 12px #ccc;
     
 }
 
-header > div{
-    margin-left: 8px;
+header > div{	
+    margin-left: -160px;
 }
 
 #conteudo{
@@ -73,23 +74,36 @@ footer{
     height: 35px;  
 }
 
+
+/* SOMBRA ABAIXO DO ITEM DE MENU*/
+.ui-shadow {    
+    -moz-box-shadow: 0px 5px 10px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 0px 5px 10px rgba(0,0,0,0.8);
+    box-shadow: 0px 5px 10px rgba(186, 49, 49, 0.8);
+
+}
+
 /* CLASSE PARA AJUSTAR O ESPAÃ‡AMENTO DOS CHECKBOX DA PESQUISA DE  PEDIDOS*/
 .ui-selectmanycheckbox td label{
     padding-right: 20px; 
+     font-family: sans-serif !important; 
 }
 
 /* input text do produto em cadastro de pedidos aba itens*/
 .produto-tabela input{
     width: 700px;
+     font-family: sans-serif !important; 
 }
 
 /* CUSTOMIZA TABLE VIEW - INício*/
 .ui-tabs .ui-tabs-panel{
-    padding: 0.5em 0.2em !important;    
+    padding: 0.5em 0.2em !important;  
+     font-family: sans-serif !important;   
 }
 
 .ui-tabs{
     padding: 0px !important;
+     font-family: sans-serif !important; 
 }
 
 .ui-tabs .ui-tabs-nav{
@@ -103,13 +117,14 @@ footer{
 
 /* Menu sistema inicio */
 .menu-sistema {
-    border: 0px !important;
+    border: 150px !important;
     padding: 0px !important;
     background: none !important;
 }
 
 .menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
     color: #FFFFFF !important;
+    font-family: sans-serif !important; 
 }
 
 .menu-sistema .ui-icon-triangle-1-s {
@@ -118,6 +133,7 @@ footer{
 /* Menu sistema fim */
 
 .ui-state-disabled{
-	opacity: .80 !important;	
+	opacity: .80 !important;
+	font-family: sans-serif !important; 	
 }
 .
