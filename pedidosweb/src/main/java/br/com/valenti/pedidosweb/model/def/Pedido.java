@@ -54,7 +54,7 @@ public class Pedido implements Serializable {
     private StatusPedido status = StatusPedido.ORCAMENTO;   
     private FormaPagamento formaPagamento;   
     private Usuario vendedor;   
-    private Pessoa cliente;  
+    private Cliente cliente;  
     private Endereco enderecoEntrega = new Endereco();   
     private List<ItemPedido> itensPedidos = new ArrayList<ItemPedido>();
     private Usuario usuarioLogado;
@@ -163,18 +163,19 @@ public class Pedido implements Serializable {
 
     public void setVendedor(Usuario vendedor) {
         this.vendedor = vendedor;
-    }
+    }    
 
-    @NotNull 
+	@NotNull 
     @ManyToOne
-    @JoinColumn(name="pessoa_id", nullable=false)
-    public Pessoa getCliente() {
-        return cliente;
-    }
+    @JoinColumn(name="cliente_id", nullable=false)
+    public Cliente getCliente() {
+		return cliente;
+	}
 
-    public void setCliente(Pessoa cliente) {
-        this.cliente = cliente;
-    } 
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
 	
 	@NotNull
     @OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)

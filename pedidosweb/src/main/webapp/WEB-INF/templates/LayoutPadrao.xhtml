@@ -17,7 +17,7 @@
     <h:body>
         <p:ajaxStatus styleClass="ajax-status" onsuccess=" mascaraDinheiro()">
             <f:facet name="start">
-                <h:graphicImage library="images" name="loading2_1.gif" style="box-shadow: 0px 12px 12px #ccc;"/>                
+                <h:graphicImage library="images" name="loading2_1.gif" style="padding-botom: 5px"/>                
             </f:facet>
             <!--Para finalizar a imagem de loading-->
             <f:facet name="complete">
@@ -27,7 +27,8 @@
         <header>
             <div style="float: left">
                 <h:link outcome="/Home">                    
-                    <h:graphicImage library="images" name="logo.png"/><!--Imagem da logo-->
+                    <h:graphicImage library="images" name="logo.png" 
+                    style="box-shadow: 0px 12px 12px #ccc" /><!--Imagem da logo-->
                 </h:link>                    
             </div>
             
@@ -36,7 +37,7 @@
                     <p:menubar styleClass="menu-sistema">
                         
                         <p:submenu label="Cadastros">
-                            <p:menuitem value="Clientes"/>
+                            <p:menuitem value="Clientes" outcome="/clientes/CadastroCliente.xhtml"/>
                             <p:menuitem value="Usuarios"/>
                             <p:menuitem value="Empresas" outcome="/empresas/CadastroEmpresa"/>
                             <p:separator/>

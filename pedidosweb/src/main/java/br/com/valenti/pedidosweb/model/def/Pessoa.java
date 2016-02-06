@@ -17,45 +17,45 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
-import br.com.valenti.pedidosweb.model.enumeration.TipoPessoa;
+import br.com.valenti.pedidosweb.model.enumeration.ClassePessoa;
 
 
 
-@Entity
-@Table(name = "pessoa")
-public class Pessoa implements Serializable {
+
+@MappedSuperclass
+public abstract class Pessoa implements Serializable {
 	
 	/************************************** PROPRIEDADES ********************************************/
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1L;	
 	
 	private Long id;
 	private String nome;
 	private String email;
 	private String docRF;
-	private TipoPessoa tipo;
+	private String docRG_Incr;
+	private ClassePessoa classe;
 	private FisicaJuridica fj;
 	private Endereco endereco = new Endereco();
 	private Empresa empresa;
-	
 
-	/************************************** GETS E SETS ********************************************/
+	/************************************** GETS E SETS ********************************************/	
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
 		return id;
 	}
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	@Column(nullable = false, length = 100)
 	public String getNome() {
 		return nome;
@@ -102,8 +102,7 @@ public class Pessoa implements Serializable {
 	
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}	
-	
+	}		
 	
 	@NotNull
     @ManyToOne
@@ -114,10 +113,32 @@ public class Pessoa implements Serializable {
 	
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
+	}	
+	
+	@Column(name = "doc_rg_inscr", nullable = false, length = 14)
+	public String getDocRG_Incr() {
+		return docRG_Incr;
 	}
 
-	/************************************** hashCode E equals ********************************************/
+	public void setDocRG_Incr(String docRG_Incr) {
+		this.docRG_Incr = docRG_Incr;
+	}	
 
+	@Enumerated(EnumType.STRING)
+	@Column(name="classe_pessoa", nullable = false, length = 10)
+	public ClassePessoa getClasse() {
+		return classe;
+	}
+
+	public void setClasse(ClassePessoa classe) {
+		this.classe = classe;
+	}
+
+
+
+	/************************************** hashCode E equals ********************************************/	
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,5 +163,6 @@ public class Pessoa implements Serializable {
 			return false;
 		return true;
 	}
+	
 
 }

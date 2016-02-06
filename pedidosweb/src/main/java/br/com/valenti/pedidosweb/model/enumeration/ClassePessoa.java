@@ -4,7 +4,7 @@ package br.com.valenti.pedidosweb.model.enumeration;
  *
  * @author Eber Lasso
  */
-public enum TipoPessoa {
+public enum ClassePessoa {
 	/************************************** PROPRIEDADES ********************************************/
     CLIENTE("Cliente"),
     VENDEDORES("Vendedores"), 
@@ -13,7 +13,7 @@ public enum TipoPessoa {
     private String descricao;
     /************************************** CONSTRUTOR ********************************************/
 
-	private TipoPessoa(String descricao) {
+	private ClassePessoa(String descricao) {
 		this.descricao = descricao;
 	}    
     /************************************** GETS ********************************************/	

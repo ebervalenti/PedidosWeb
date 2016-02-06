@@ -1,0 +1,86 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"    
+     xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:o="http://omnifaces.org/ui">
+    
+     <ui:define name="titulo">
+		<h:outputText rendered="#{cadastroClienteBean.editando == true}" 
+        value="Edit. Cliente.: #{cadastroClienteBean.cliente.nome}"/> 
+        
+        <h:outputText rendered="#{cadastroClienteBean.editando == false}" 
+        value="Novo Cliente"/> 
+	</ui:define>
+    <ui:define name="corpo">
+    <f:metadata>
+    		<o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}"/>    		
+    	</f:metadata>    
+        <h:form>
+	        <h1>
+	            <h:outputText rendered="#{cadastroClienteBean.editando == true}" 
+	        	value="Editando Cliente: #{cadastroClienteBean.cliente.id} - #{cadastroClienteBean.cliente.nome}"/> 
+	        
+		        <h:outputText rendered="#{cadastroClienteBean.editando == false}" 
+		        value="Novo Cliente"/> 
+	        </h1> 
+	         <p:messages autoUpdate="true" closable="true"></p:messages>
+            <p:toolbar style="margin-top: 20px">            
+                <p:toolbarGroup> 
+                    <p:button value="Novo" outcome="/clientes/CadastroCliente"/>
+                    <p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroClienteBean.salvar}" update="@form"/>
+                </p:toolbarGroup>          
+
+                <p:toolbarGroup align="right"> 
+                   <!--   <p:button value="Pesquisa" outcome="/clientes/PesquisaEmpresa"/>   --> 
+                   <p:button value="Pesquisa"/>            
+                </p:toolbarGroup>           
+
+            </p:toolbar>
+
+            <p:panelGrid columns="4" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo,rotulo,campo">
+               
+               <!-- Campo para Pessoa Fisica Juridica -->
+	           <p:outputLabel value="Pessoa" for="fj"/>
+	            <p:selectOneRadio id="fj" value="#{cadastroClienteBean.fj}">
+	              <f:selectItems value="#{cadastroClienteBean.pessoaFJ}" var="pessoaPF"
+	               	itemValue="#{pessoaPF}" itemLabel="#{pessoaPF.descricao}"  /> 
+	               	<p:ajax event="change" listener="#{cadastroClienteBean.atualizaCadastro}" update="doc1"/>                             	                         
+	           </p:selectOneRadio>           
+	           
+	           	
+               <p:outputLabel value="Número" />
+				<h:outputLabel value="#{cadastroClienteBean.cliente.id}" rendered="#{cadastroClienteBean.cliente.existente}"/>
+				<h:outputLabel value="Em edição" rendered="#{not cadastroClienteBean.cliente.existente}"/>
+               
+               <p:outputLabel value="#{cadastroClienteBean.cliente.fj.descricao}"  rendered="#{cadastroClienteBean.juridica}" id="doc1"/>                
+                <p:inputText id="docRF" size="20" maxlength="20" value="#{cadastroClienteBean.cliente.docRF}"/> 
+                
+                <p:outputLabel value="cccccccccccc" />                
+                <p:inputText id="docRG_Incr" size="20" maxlength="20" value="#{cadastroClienteBean.cliente.docRG_Incr}"/>               	
+              	
+              	<p:outputLabel value="Nome" for="nome"/>
+                <p:inputText id="nome" size="60" maxlength="100" value="#{cadastroClienteBean.cliente.nome}"/>                  
+                
+                 <p:outputLabel value="Logradouro" for="entregaLogradouro"/>
+		         <p:inputText id="entregaLogradouro" size="50" value="#{cadastroClienteBean.cliente.endereco.logradouro}"/>
+		        
+		         <p:outputLabel value="Número" for="entregaNumero"/>
+		         <p:inputText id="entregaNumero" size="5" value="#{cadastroClienteBean.cliente.endereco.numero}"/>
+		                  
+		         <p:outputLabel value="Complemento" for="entregaComplemento"/>
+		         <p:inputText id="entregaComplemento" size="50" value="#{cadastroClienteBean.cliente.endereco.complemento}"/>
+		                  
+		         <p:outputLabel value="Cidade" for="entregaCidade"/>
+		         <p:inputText id="entregaCidade" size="20" value="#{cadastroClienteBean.cliente.endereco.cidade}"/>
+		                  
+		         <p:outputLabel value="Estado" for="entregaEstado"/>
+		         <p:inputText id="entregaEstado" size="20" value="#{cadastroClienteBean.cliente.endereco.uf}"/>
+		                 
+		         <p:outputLabel value="CEP" for="entregaCEP"/>
+		         <p:inputText id="entregaCEP" size="20" value="#{cadastroClienteBean.cliente.endereco.cep}"/>                
+			</p:panelGrid>
+        </h:form>   
+    </ui:define>           
+</ui:composition>   

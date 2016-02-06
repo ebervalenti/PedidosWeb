@@ -13,6 +13,7 @@ import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
+import br.com.valenti.pedidosweb.model.def.Cliente;
 import br.com.valenti.pedidosweb.model.def.Empresa;
 import br.com.valenti.pedidosweb.model.def.Endereco;
 import br.com.valenti.pedidosweb.model.def.ItemEstoque;
@@ -22,10 +23,12 @@ import br.com.valenti.pedidosweb.model.def.Pessoa;
 import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
+import br.com.valenti.pedidosweb.model.repository.Clientes;
 import br.com.valenti.pedidosweb.model.repository.Itens_Estoque;
 import br.com.valenti.pedidosweb.model.repository.Pessoas;
 import br.com.valenti.pedidosweb.model.repository.Produtos;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
+import br.com.valenti.pedidosweb.model.repository.filter.ClienteFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.Itemestoquefilter;
 import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
@@ -55,9 +58,9 @@ public class CadastroPedidoBean implements Serializable{
     private List<Usuario> vendedores;
     
     @Inject
-    private Pessoas clientes;
+    private Clientes clientes;
     
-    private PessoaFilter cliente = new PessoaFilter();
+    private ClienteFilter cliente = new ClienteFilter();
 	
     //@Inject
     //private CadastroPedidoService cadastroPedidoService;
@@ -199,7 +202,7 @@ public class CadastroPedidoBean implements Serializable{
 			 		
 	}
 
-	public List<Pessoa> completarCliente(String nome) {		
+	public List<Cliente> completarCliente(String nome) {		
 		this.cliente.setNome(nome);
 		return this.clientes.pesquisar(cliente); 		
 	} 	
