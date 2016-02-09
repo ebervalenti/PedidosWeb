@@ -48,6 +48,10 @@
                 <p:tab title="Observação">
                     <ui:include src="/pedidos/ObervacaoPedido.xhtml"/>                     
                 </p:tab>
+                
+                 <p:tab title="Forma de Pagamento" rendered="#{cadastroPedidoBean.aPrazo}">
+                    <ui:include src="/pedidos/ObervacaoPedido.xhtml"/>                     
+                </p:tab>
             </p:tabView>
                
         </h:form>   

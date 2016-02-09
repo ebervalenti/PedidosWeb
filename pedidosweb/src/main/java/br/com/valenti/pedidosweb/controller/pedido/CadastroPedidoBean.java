@@ -1,8 +1,9 @@
 package br.com.valenti.pedidosweb.controller.pedido;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
@@ -10,7 +11,8 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 
 import br.com.valenti.pedidosweb.controller.events.PedidoAlteradoEvent;
 import br.com.valenti.pedidosweb.model.def.Cliente;
@@ -19,25 +21,16 @@ import br.com.valenti.pedidosweb.model.def.Endereco;
 import br.com.valenti.pedidosweb.model.def.ItemEstoque;
 import br.com.valenti.pedidosweb.model.def.ItemPedido;
 import br.com.valenti.pedidosweb.model.def.Pedido;
-import br.com.valenti.pedidosweb.model.def.Pessoa;
-import br.com.valenti.pedidosweb.model.def.Produto;
 import br.com.valenti.pedidosweb.model.def.Usuario;
 import br.com.valenti.pedidosweb.model.enumeration.FormaPagamento;
 import br.com.valenti.pedidosweb.model.repository.Clientes;
 import br.com.valenti.pedidosweb.model.repository.Itens_Estoque;
-import br.com.valenti.pedidosweb.model.repository.Pessoas;
-import br.com.valenti.pedidosweb.model.repository.Produtos;
 import br.com.valenti.pedidosweb.model.repository.Usuarios;
 import br.com.valenti.pedidosweb.model.repository.filter.ClienteFilter;
 import br.com.valenti.pedidosweb.model.repository.filter.Itemestoquefilter;
-import br.com.valenti.pedidosweb.model.repository.filter.PessoaFilter;
-import br.com.valenti.pedidosweb.model.repository.filter.ProdutoFilter;
 import br.com.valenti.pedidosweb.security.Seguranca;
-import br.com.valenti.pedidosweb.services.CadastroPedidoService;
 import br.com.valenti.pedidosweb.services.Itens_EstoqueService;
-import br.com.valenti.pedidosweb.services.NegocioException;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
-import br.com.valenti.pedidosweb.validation.SKU;
 
 
 @Named
@@ -60,29 +53,17 @@ public class CadastroPedidoBean implements Serializable{
     @Inject
     private Clientes clientes;
     
-    private ClienteFilter cliente = new ClienteFilter();
-	
-    //@Inject
-    //private CadastroPedidoService cadastroPedidoService;
+    private ClienteFilter cliente = new ClienteFilter();    
     
     @Inject
-    private Itens_EstoqueService cadastroPedidoService;
-    
-   // private Produto produtoLinhaEditavel;
+    private Itens_EstoqueService cadastroPedidoService;   
     
     private ItemEstoque produtoLinhaEditavel;
-    
-    //@Inject
-    //private Produtos produtos; //repository
-    
+        
     @Inject
     private Itens_Estoque produtos; //repository
-    
-    //private ProdutoFilter produtoFiltro = new ProdutoFilter();
-    
-    private Itemestoquefilter produtoFiltro = new Itemestoquefilter();
-    
-   // private String sku;
+       
+    private Itemestoquefilter produtoFiltro = new Itemestoquefilter();  
     
     @Inject
     private Seguranca seguranca;
@@ -105,33 +86,7 @@ public class CadastroPedidoBean implements Serializable{
 		return vendedores;
 	}
 
-/*
-	public Produto getProdutoLinhaEditavel() {
-		return produtoLinhaEditavel;
-	}
 
-	public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
-		this.produtoLinhaEditavel = produtoLinhaEditavel;
-	}
-
-	public ProdutoFilter getProdutoFiltro() {
-		return produtoFiltro;
-	}
-
-	public void setProdutoFiltro(ProdutoFilter produtoFiltro) {
-		this.produtoFiltro = produtoFiltro;
-	}	
-
-	@SKU
-	public String getSku() {
-		return sku;
-	}
-
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
-	*/
-	
 	public ItemEstoque getProdutoLinhaEditavel() {
 		return produtoLinhaEditavel;
 	}
@@ -142,8 +97,7 @@ public class CadastroPedidoBean implements Serializable{
 
 	public Itemestoquefilter getProdutoFiltro() {
 		return produtoFiltro;
-	}
-	
+	}	
 
 	/**************************************  SETS ********************************************/	
 	
@@ -285,7 +239,24 @@ public class CadastroPedidoBean implements Serializable{
       no método this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
 	 */
 	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
-		this.pedido = event.getPedido();
-		
+		this.pedido = event.getPedido();		
 	}
+	
+	//Criado para a tela de pesquisa de produto
+	public void produtoSelecionado(SelectEvent event){
+		this.produtoLinhaEditavel = (ItemEstoque) event.getObject();
+		ItemPedido item = this.pedido.getItensPedidos().get(0);
+			
+		item.setProduto(this.produtoLinhaEditavel);
+		item.getProduto().setProduto(this.produtoLinhaEditavel.getProduto());
+		item.setValorUnitario(this.produtoLinhaEditavel.getProduto().getValorUnitario());
+		
+		this.pedido.adicionarItemVazio();
+		this.produtoLinhaEditavel = null;	
+		
+		this.pedido.recalcularValorTotal();		
+	}
+	
+	
+	
 }

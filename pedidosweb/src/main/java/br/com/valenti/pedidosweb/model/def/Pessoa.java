@@ -21,6 +21,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
 import br.com.valenti.pedidosweb.model.enumeration.ClassePessoa;
@@ -56,6 +59,9 @@ public abstract class Pessoa implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	@NotNull	
+	@NotBlank
 	@Column(nullable = false, length = 100)
 	public String getNome() {
 		return nome;
@@ -65,7 +71,8 @@ public abstract class Pessoa implements Serializable {
 		this.nome = nome;
 	}
 
-	@Column(nullable = false, length = 255)
+	
+	@Column(length = 255)
 	public String getEmail() {
 		return email;
 	}
@@ -74,6 +81,7 @@ public abstract class Pessoa implements Serializable {
 		this.email = email;
 	}
 
+	@NotNull @NotBlank
 	@Column(name = "doc_receita_federal", nullable = false, length = 14)
 	public String getDocRF() {
 		return docRF;
@@ -82,6 +90,7 @@ public abstract class Pessoa implements Serializable {
 	public void setDocRF(String docRF) {
 		this.docRF = docRF;
 	}		
+	
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="fisica_juridica", nullable = false, length = 10)
@@ -115,6 +124,7 @@ public abstract class Pessoa implements Serializable {
 		this.empresa = empresa;
 	}	
 	
+	@NotNull @NotBlank
 	@Column(name = "doc_rg_inscr", nullable = false, length = 14)
 	public String getDocRG_Incr() {
 		return docRG_Incr;
@@ -123,7 +133,7 @@ public abstract class Pessoa implements Serializable {
 	public void setDocRG_Incr(String docRG_Incr) {
 		this.docRG_Incr = docRG_Incr;
 	}	
-
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name="classe_pessoa", nullable = false, length = 10)
 	public ClassePessoa getClasse() {

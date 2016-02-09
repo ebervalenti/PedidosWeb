@@ -97,7 +97,7 @@ public class Pedidos implements Serializable {
 			criteria.add(Restrictions.in("status", filtro.getStatusPedido()));			
 		}
 		
-		return criteria.addOrder(Order.asc("id")).list();
+		return criteria.list();
 	}	
 	
 	public Pedido porId(Long id){

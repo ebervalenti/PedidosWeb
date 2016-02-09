@@ -7,25 +7,32 @@
     
     <!-- AO ALTERAR VALORES NA TELA COM EVENTO AJAX FAZER UPDATE EM: 
     itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido  -->
-    
-   
     <p:dataTable value="#{cadastroPedidoBean.pedido.itensPedidos}" var="item" rowIndexVar="linha" id="itensTable"
-    paginator="true" rows="10" paginatorAlwaysVisible="true" paginatorPosition="top">  
-    
-     	<p:column headerText="Código" style="text-align: center; width: 120px">
-        	<h:outputText value="#{item.produto.produto.id}"/>
-       	</p:column>    
-        
-        <p:column headerText="Produto" style="text-align: center; width: 120px">
-        	<h:outputText value="#{item.produto.produto.nome}" rendered="#{item.produtoAssociado}"/>
-        	
-            <p:autoComplete styleClass="produto-tabela" value="#{cadastroPedidoBean.produtoLinhaEditavel}"
-            completeMethod="#{cadastroPedidoBean.completarProduto}" var="produto" itemLabel="#{produto.produto.nome}" 
-            itemValue="#{produto}" forceSelection="true" rendered="#{not item.produtoAssociado }">
-            
-            <p:ajax event="itemSelect" update="itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido" 
-            listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/> 
-            </p:autoComplete> 
+    paginator="true" rows="10" paginatorAlwaysVisible="true" paginatorPosition="top"> 
+     	<p:column headerText="Código" style="text-align: center; width: 120px">     	
+     	 
+        	<h:outputText value="#{item.produto.produto.id}"/> 
+        	<!-- mensagem de confirmação de exclusão -->
+       	</p:column>          
+        <p:column headerText="Produto" style="text-align: center; width: 120px">      
+	        <p:panelGrid columns="2" >
+	        	 <p:commandButton icon="ui-icon-search" title="Teste" 
+			     	action="#{pesquisaProdutoDialogBeanBean.abrirDialogo}"
+			     	process="@this"
+			     	update="@none" rendered="#{ not item.produtoAssociado}">			     	
+			     	<p:ajax event="dialogReturn" listener="#{cadastroPedidoBean.produtoSelecionado}" process="@this" update="itensTable :frmCadastroPedido" />
+			     	</p:commandButton>  
+			     		   
+	        
+	        	<h:outputText value="#{item.produto.produto.nome}" rendered="#{item.produtoAssociado}"/>	        	
+	            <p:autoComplete styleClass="produto-tabela" value="#{cadastroPedidoBean.produtoLinhaEditavel}"
+	            completeMethod="#{cadastroPedidoBean.completarProduto}" var="produto" itemLabel="#{produto.produto.nome}" 
+	            itemValue="#{produto}" forceSelection="true" rendered="#{not item.produtoAssociado }" >            
+	            <p:ajax event="itemSelect" update="itensTable :frmCadastroPedido:subtotal :frmCadastroPedido:totalPedido" 
+	            listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>             
+	            </p:autoComplete>
+	                
+	        </p:panelGrid>
         </p:column>
         
         <p:column headerText="Valor unitário" style="text-align: center; width: 120px">

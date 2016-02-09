@@ -28,14 +28,21 @@
 	            itemValue="#{vendedor}" itemLabel="#{vendedor.nome}"/> 
 	        </p:selectOneMenu>
 	        
-	        
-	        	<p:outputLabel value="Cliente " style="margin-left: 5px" for="cliente"/>	                    
-	            <p:autoComplete id="cliente" size="40" 
+	        <p:outputLabel value="Cliente " style="margin-left: 5px" for="cliente"/>	 
+	        <h:panelGroup>
+	        <p:commandButton icon="ui-icon-search"
+	        title="Teste" 
+	        action="#{pesquisaProdutoDialogBeanBean.abrirDialogo}"
+     		process="@this"
+     		update="@none"	        
+	        />	        	                   
+	            <p:autoComplete id="cliente" size="80" 
 	            value="#{cadastroPedidoBean.pedido.cliente}" completeMethod="#{cadastroPedidoBean.completarCliente}" 
 	            var="cliente" itemValue="#{cliente}" itemLabel="#{cliente.nome}" forceSelection="true"
 	            disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">	            
-	            <p:ajax event="itemSelect" update="codCli"/>	            
-	            </p:autoComplete>      
+	            <p:ajax event="itemSelect" update="codCli"/>	                 	            
+	            </p:autoComplete>             
+            </h:panelGroup>  
 	       
 	        	<p:outputLabel value="Codigo "/>
 	        	<p:outputLabel id="codCli" value="#{cadastroPedidoBean.pedido.cliente.id}" style="margin-left: 5px"/>      	

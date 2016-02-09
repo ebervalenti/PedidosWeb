@@ -13,6 +13,7 @@ import br.com.valenti.pedidosweb.model.def.Estoque;
 import br.com.valenti.pedidosweb.model.enumeration.FisicaJuridica;
 import br.com.valenti.pedidosweb.model.enumeration.StatusPedido;
 import br.com.valenti.pedidosweb.model.repository.filter.ClienteFilter;
+import br.com.valenti.pedidosweb.security.Seguranca;
 import br.com.valenti.pedidosweb.services.CadastroClienteService;
 import br.com.valenti.pedidosweb.util.jsf.FacesUtil;
 
@@ -28,6 +29,9 @@ public class CadastroClienteBean implements Serializable {
 	private CadastroClienteService cadastroclienteservice;
 	
 	private FisicaJuridica fj;
+	
+	@Inject
+	private Seguranca seguranca;
 	
 
 	/************************************** CONSTRUTOR ********************************************/	
@@ -54,25 +58,27 @@ public class CadastroClienteBean implements Serializable {
 	}
 
 	/************************************** MÉTODOS ********************************************/	
-	public boolean isFisica(){
-		
-		System.out.println("222==="+fj.getDescricao());
-		return this.cliente.getFj() == fj.FISICA;		
+	public boolean isFisica(){		
+		return true;		
 	}
 	
-	public boolean isJuridica(){
-		
-		System.out.println("444==="+fj.getDescricao());
-		return this.cliente.getFj() == fj.JURIDICA;		
+	public String isJuridica(){
+		if (this.cliente.getFj().equals(this.fj)) {
+			return "1" ;	
+		}		
+		return "2" ;		
 	}
 	
 	public void limpar(){		
 		this.cliente 	= 	new Cliente();	
-		this.cliente.setFj(fj);
+		//this.cliente.setFj(fj);
 		this.cliente.setEndereco(new Endereco());		
 	}
 	
 	public void salvar(){		
+		this.cliente.setEmpresa(seguranca.getUsuario().getEmpresa());
+		this.cliente.setFj(fj);
+		System.out.println("aaa"+this.cliente.getFj());
 		this.cliente = cadastroclienteservice.salvar(this.cliente);
 		
 		FacesUtil.addInfoMessage("Cliente "+ this.cliente.getId()+" - "+this.cliente.getNome()+
@@ -90,9 +96,15 @@ public class CadastroClienteBean implements Serializable {
 	
 	public void atualizaCadastro() {	
 		if (this.cliente != null) {			
-			this.cliente.atualizaCadastroFisicaJuridica(this.fj);
-			System.out.println("fffffffffffffffff");
+			this.cliente.atualizaCadastroFisicaJuridica(this.fj);			
 		}		
+	}
+	
+	public void inicializar() {
+		if (FacesUtil.isNotPostBack()) {
+			this.fj = FisicaJuridica.FISICA;			
+		}
+			 		
 	}
 
 	/************************************** hashCode E equals ********************************************/

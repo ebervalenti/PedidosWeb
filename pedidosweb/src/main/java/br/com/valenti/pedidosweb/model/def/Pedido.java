@@ -334,7 +334,7 @@ public class Pedido implements Serializable {
     public boolean isNaoEnviavelPorEmail(){
 		return this.isNovo() || this.isCancelado();
     	
-    }   
+    }      
 
 	/************************************** hashCode E equals ********************************************/
     @Override

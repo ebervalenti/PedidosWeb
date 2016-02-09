@@ -6,6 +6,11 @@
       xmlns:p="http://primefaces.org/ui" 
       xmlns:o="http://omnifaces.org/ui">
     
+    <f:metadata>
+     	<o:viewParam name="cliente" value="#{cadastroClienteBean.cliente}"/>    	
+    	<f:event listener="#{cadastroClienteBean.inicializar}" type="preRenderView"/>
+    </f:metadata>
+    
      <ui:define name="titulo">
 		<h:outputText rendered="#{cadastroClienteBean.editando == true}" 
         value="Edit. Cliente.: #{cadastroClienteBean.cliente.nome}"/> 
@@ -37,27 +42,27 @@
                    <p:button value="Pesquisa"/>            
                 </p:toolbarGroup>           
 
-            </p:toolbar>
+            </p:toolbar>         
 
-            <p:panelGrid columns="4" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo,rotulo,campo">
+            <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px" columnClasses="rotulo,campo">            
+            <p:outputLabel value="Número"/>
+			<h:outputLabel value="#{cadastroClienteBean.cliente.id}" rendered="#{cadastroClienteBean.cliente.existente}"/>
+			<h:outputLabel value="Em edição" rendered="#{not cadastroClienteBean.cliente.existente}"/>
                
                <!-- Campo para Pessoa Fisica Juridica -->
-	           <p:outputLabel value="Pessoa" for="fj"/>
-	            <p:selectOneRadio id="fj" value="#{cadastroClienteBean.fj}">
+	           <p:outputLabel value="Pessoa" for="pessoafj"/>
+	            <p:selectOneRadio id="fj" value="#{cadastroClienteBean.fj}" required="true" >
 	              <f:selectItems value="#{cadastroClienteBean.pessoaFJ}" var="pessoaPF"
-	               	itemValue="#{pessoaPF}" itemLabel="#{pessoaPF.descricao}"  /> 
-	               	<p:ajax event="change" listener="#{cadastroClienteBean.atualizaCadastro}" update="doc1"/>                             	                         
-	           </p:selectOneRadio>           
-	           
+	               	itemValue="#{pessoaPF}" itemLabel="#{pessoaPF.descricao}" id="pessoafj"  /> 
+	               	<p:ajax event="change" listener="#{cadastroClienteBean.atualizaCadastro}" update="doc1: doc2"/>                             	                         
+	           </p:selectOneRadio>
 	           	
-               <p:outputLabel value="Número" />
-				<h:outputLabel value="#{cadastroClienteBean.cliente.id}" rendered="#{cadastroClienteBean.cliente.existente}"/>
-				<h:outputLabel value="Em edição" rendered="#{not cadastroClienteBean.cliente.existente}"/>
                
-               <p:outputLabel value="#{cadastroClienteBean.cliente.fj.descricao}"  rendered="#{cadastroClienteBean.juridica}" id="doc1"/>                
+               
+               <p:outputLabel id="doc1" value="#{cadastroClienteBean.fj == 'JURIDICA' ? 'C.N.P.J.':'C.P.F.'}" for="docRF"/>                                            
                 <p:inputText id="docRF" size="20" maxlength="20" value="#{cadastroClienteBean.cliente.docRF}"/> 
                 
-                <p:outputLabel value="cccccccccccc" />                
+                <p:outputLabel id="doc2" value="#{cadastroClienteBean.fj == 'JURIDICA' ? 'Inscrição Estadual':'R.G.'}" for="docRG_Incr" />      
                 <p:inputText id="docRG_Incr" size="20" maxlength="20" value="#{cadastroClienteBean.cliente.docRG_Incr}"/>               	
               	
               	<p:outputLabel value="Nome" for="nome"/>
